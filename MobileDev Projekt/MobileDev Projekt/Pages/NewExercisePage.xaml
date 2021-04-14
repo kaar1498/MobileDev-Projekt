@@ -2,12 +2,26 @@
 
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="MobileDev_Projekt.Pages.NewExercisePage">
+             xmlns:models="clr-namespace:MobileDev_Projekt.Models;assembly=MobileDev Projekt"
+             x:Class="MobileDev_Projekt.Pages.NewExercisePage" x:DataType="models:ExerciseModel">
   <ContentPage.Content>
-    <StackLayout>
-      <Button x:Name="UndoButton"
-              Text="Fortryd"
-              Clicked="UndoButton_OnClicked"></Button>
+    <StackLayout Margin="5,0,5,0">
+      
+      <Editor Text="{Binding .Name}"></Editor>
+      
+      <Grid Margin="0,0,0,10">
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition />
+          <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        
+        <Button Grid.Column="0" x:Name="UndoButton"
+                               Text="Fortryd"
+                               Clicked="UndoButton_OnClicked"></Button>
+        <Button Grid.Column="1" x:Name="CreateButton"
+                Text="Opret"
+                Clicked="CreateButton_OnClicked"></Button>
+      </Grid>
     </StackLayout>
   </ContentPage.Content>
 </ContentPage>

@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+﻿using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
@@ -8,35 +8,26 @@ namespace MobileDev_Projekt.Models
 {
   public class NewProgramPageModel : INotifyPropertyChanged
   {
-    private ObservableCollection<InformationModel> _informationModels;
     private ObservableCollection<ExerciseModel> _exerciseModels;
+    private InformationModel _informationModel;
 
     public NewProgramPageModel()
     {
-      InformationModels = new ObservableCollection<InformationModel>
+      InformationModel = new InformationModel
       {
-        new InformationModel
-        {
-          Name = "Test",
-        }
+        Name = "Program Navn"
       };
-      
-      ExerciseModels = new ObservableCollection<ExerciseModel>
-      {
-        new ExerciseModel
-        {
-          Name = "Test"
-        }
-      };
+
+      ExerciseModels = new ObservableCollection<ExerciseModel>();
     }
-    
-    public ObservableCollection<InformationModel> InformationModels
+
+    public InformationModel InformationModel
     {
-      get => _informationModels;
+      get => _informationModel;
       set
       {
-        if (Equals(value, _informationModels)) return;
-        _informationModels = value;
+        if (Equals(value, _informationModel)) return;
+        _informationModel = value;
         OnPropertyChanged();
       }
     }
@@ -96,7 +87,7 @@ namespace MobileDev_Projekt.Models
       PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
   }
-  
+
   public class ExerciseModel : INotifyPropertyChanged
   {
     private string _name;
