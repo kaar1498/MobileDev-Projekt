@@ -1,4 +1,5 @@
 ﻿using System;
+using MobileDev_Projekt.Models;
 using Xamarin.Forms.Xaml;
 
 namespace MobileDev_Projekt.Pages
@@ -6,9 +7,11 @@ namespace MobileDev_Projekt.Pages
   [XamlCompilation(XamlCompilationOptions.Compile)]
   public partial class NewProgramPage
   {
+    private NewProgramPageModel Model { get; } = new NewProgramPageModel();
     public NewProgramPage()
     {
       InitializeComponent();
+      BindingContext = Model;
     }
     
     private void ExerciseButton_OnClicked(object sender, EventArgs e)

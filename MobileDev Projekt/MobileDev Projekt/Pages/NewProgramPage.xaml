@@ -2,8 +2,9 @@
 
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:models="clr-namespace:MobileDev_Projekt.Models;assembly=MobileDev Projekt"
              x:Class="MobileDev_Projekt.Pages.NewProgramPage"
-             Title="Nyt program">
+             Title="Nyt program" x:DataType="models:NewProgramPageModel">
   <ContentPage.Content>
     <Grid Margin="5,0,5,0">
         <Grid.RowDefinitions>
@@ -16,18 +17,10 @@
         </Grid.RowDefinitions>
       
         <ListView Grid.Row="0"
-                  Margin="0,0,0,10">
-          <ListView.ItemsSource>
-            <x:Array Type="{x:Type x:String}">
-              <x:String>mono</x:String>
-              <x:String>monodroid</x:String>
-              <x:String>monodroid</x:String>
-              <x:String>monodroid</x:String>
-              <x:String>monodroid</x:String>
-            </x:Array>
-          </ListView.ItemsSource>
+                  Margin="0,0,0,10"
+                  ItemsSource="{Binding InformationModels}">
           <ListView.ItemTemplate>
-            <DataTemplate>
+            <DataTemplate x:DataType="models:InformationModel">
               <ViewCell>
                 <Grid>
                   <Grid.ColumnDefinitions>
@@ -35,7 +28,7 @@
                     <ColumnDefinition />
                   </Grid.ColumnDefinitions>
                   <Label Grid.Column="0"
-                         Text="{Binding}" />
+                         Text="{Binding Name}" />
                   <Editor Grid.Column="1" />
                 </Grid>
               </ViewCell>
@@ -43,20 +36,10 @@
           </ListView.ItemTemplate>
         </ListView>
 
-        <ListView Grid.Row="1" Grid.RowSpan="3">
-          <ListView.ItemsSource>
-            <x:Array Type="{x:Type x:String}">
-              <x:String>mono</x:String>
-              <x:String>monodroid</x:String>
-              <x:String>monotouch</x:String>
-              <x:String>monotouch</x:String>
-              <x:String>monotouch</x:String>
-              <x:String>monotouch</x:String>
-              <x:String>monotouch</x:String>
-            </x:Array>
-          </ListView.ItemsSource>
+        <ListView Grid.Row="1" Grid.RowSpan="3"
+                  ItemsSource="{Binding ExerciseModels}">
           <ListView.ItemTemplate>
-            <DataTemplate>
+            <DataTemplate x:DataType="models:ExerciseModel">
               <ViewCell>
                 <SwipeView>
                   <SwipeView.LeftItems>
@@ -69,7 +52,7 @@
                                  Invoked="DeleteSwipeItem_OnInvoked" />
                     </SwipeItems>
                   </SwipeView.LeftItems>
-                  <Label Text="Test" />
+                  <Label Text="{Binding Name}" />
                 </SwipeView>
               </ViewCell>
             </DataTemplate>
