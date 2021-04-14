@@ -10,7 +10,7 @@ namespace MobileDev_Projekt
         {
             InitializeComponent();
 
-            MainPage = new MainPage();
+            MainPage = new Pages.Login();
         }
 
         protected override void OnStart()

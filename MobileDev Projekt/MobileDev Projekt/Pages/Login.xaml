@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MobileDev_Projekt.Pages.Login">
+    <ContentPage.Content>
+        <StackLayout Spacing="30">
+            <!--<Image Source="{local:ImageResource MobileDev_Projekt.Embedded.logo.png}" />-->
+            <Label 
+                FontSize="Large" 
+                Text="PhysioCam"
+                VerticalOptions="Start" 
+                HorizontalOptions="CenterAndExpand" />
+            <StackLayout Padding="100">
+                <Entry
+                    FontSize="Medium"
+                    VerticalOptions="Center" 
+                    HorizontalOptions="Center"
+                    Placeholder="Brugernavn"/>
+                    <Entry
+                    FontSize="Medium"
+                    VerticalOptions="Center" 
+                    HorizontalOptions="Center"
+                    Placeholder="Password"/>
+            </StackLayout>
+            <StackLayout>
+                <Button
+                    VerticalOptions="End" 
+                    HorizontalOptions="Center"
+                    Text="Login"/>
+                <Button 
+                    VerticalOptions="End" HorizontalOptions="Center"
+                    Text="Opret"/>
+            </StackLayout>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

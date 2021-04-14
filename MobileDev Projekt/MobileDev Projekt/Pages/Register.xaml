@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MobileDev_Projekt.Pages.Register"
+             Title="Register">
+    <ContentPage.Content>
+        <StackLayout>
+            <Label Text="Create Account"
+                VerticalOptions="CenterAndExpand" 
+                HorizontalOptions="CenterAndExpand" />
+            <Entry HorizontalOptions="Center" VerticalOptions="Center" Placeholder="John Doe"></Entry>
+            <Entry HorizontalOptions="Center" VerticalOptions="Center" Placeholder="John@email.com"></Entry>
+            <Entry HorizontalOptions="Center" VerticalOptions="Center" Placeholder="Password" IsPassword="True"></Entry>
+            <Button Text="Create Account"></Button>
+            <Label HorizontalOptions="Center" VerticalOptions="End" Text="Already have an account? Sign in here"></Label>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
