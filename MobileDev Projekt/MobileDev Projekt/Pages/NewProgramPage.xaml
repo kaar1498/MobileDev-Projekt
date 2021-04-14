@@ -5,68 +5,82 @@
              x:Class="MobileDev_Projekt.Pages.NewProgramPage"
              Title="Nyt program">
   <ContentPage.Content>
-    <StackLayout Margin="5,0,5,0"
-                 VerticalOptions="Start">
+    <Grid Margin="5,0,5,0">
+        <Grid.RowDefinitions>
+          <RowDefinition />
+          <RowDefinition />
+          <RowDefinition />
+          <RowDefinition />
+          <RowDefinition Height="Auto" />
+          <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+      
+        <ListView Grid.Row="0"
+                  Margin="0,0,0,10">
+          <ListView.ItemsSource>
+            <x:Array Type="{x:Type x:String}">
+              <x:String>mono</x:String>
+              <x:String>monodroid</x:String>
+              <x:String>monodroid</x:String>
+              <x:String>monodroid</x:String>
+              <x:String>monodroid</x:String>
+            </x:Array>
+          </ListView.ItemsSource>
+          <ListView.ItemTemplate>
+            <DataTemplate>
+              <ViewCell>
+                <Grid>
+                  <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                  </Grid.ColumnDefinitions>
+                  <Label Grid.Column="0"
+                         Text="{Binding}" />
+                  <Editor Grid.Column="1" />
+                </Grid>
+              </ViewCell>
+            </DataTemplate>
+          </ListView.ItemTemplate>
+        </ListView>
 
+        <ListView Grid.Row="1" Grid.RowSpan="3">
+          <ListView.ItemsSource>
+            <x:Array Type="{x:Type x:String}">
+              <x:String>mono</x:String>
+              <x:String>monodroid</x:String>
+              <x:String>monotouch</x:String>
+              <x:String>monotouch</x:String>
+              <x:String>monotouch</x:String>
+              <x:String>monotouch</x:String>
+              <x:String>monotouch</x:String>
+            </x:Array>
+          </ListView.ItemsSource>
+          <ListView.ItemTemplate>
+            <DataTemplate>
+              <ViewCell>
+                <SwipeView>
+                  <SwipeView.LeftItems>
+                    <SwipeItems>
+                      <SwipeItem Text="Edit"
+                                 BackgroundColor="LimeGreen"
+                                 Invoked="EditSwipeItem_OnInvoked" />
+                      <SwipeItem Text="Delete"
+                                 BackgroundColor="OrangeRed"
+                                 Invoked="DeleteSwipeItem_OnInvoked" />
+                    </SwipeItems>
+                  </SwipeView.LeftItems>
+                  <Label Text="Test" />
+                </SwipeView>
+              </ViewCell>
+            </DataTemplate>
+          </ListView.ItemTemplate>
+        </ListView>
 
-      <ListView BackgroundColor="Blue">
-        <ListView.ItemsSource>
-          <x:Array Type="{x:Type x:String}">
-            <x:String>mono</x:String>
-            <x:String>monodroid</x:String>
-          </x:Array>
-        </ListView.ItemsSource>
-        <ListView.ItemTemplate>
-          <DataTemplate>
-            <ViewCell>
-              <Grid>
-                <Grid.ColumnDefinitions>
-                  <ColumnDefinition />
-                  <ColumnDefinition />
-                </Grid.ColumnDefinitions>
-                <Label Grid.Column="0"
-                       Text="{Binding}" />
-                <Editor Grid.Column="1" />
-              </Grid>
-            </ViewCell>
-          </DataTemplate>
-        </ListView.ItemTemplate>
-      </ListView>
-
-      <ListView BackgroundColor="Brown">
-        <ListView.ItemsSource>
-          <x:Array Type="{x:Type x:String}">
-            <x:String>mono</x:String>
-            <x:String>monodroid</x:String>
-            <x:String>monotouch</x:String>
-          </x:Array>
-        </ListView.ItemsSource>
-        <ListView.ItemTemplate>
-          <DataTemplate>
-            <ViewCell>
-              <SwipeView>
-                <SwipeView.LeftItems>
-                  <SwipeItems>
-                    <SwipeItem Text="Edit"
-                               BackgroundColor="LimeGreen"
-                               Invoked="EditSwipeItem_OnInvoked" />
-                    <SwipeItem Text="Delete"
-                               BackgroundColor="OrangeRed"
-                               Invoked="DeleteSwipeItem_OnInvoked" />
-                  </SwipeItems>
-                </SwipeView.LeftItems>
-                <Label Text="Test" />
-              </SwipeView>
-            </ViewCell>
-          </DataTemplate>
-        </ListView.ItemTemplate>
-      </ListView>
-
-      <Button x:Name="ExerciseButton"
+      <Button Grid.Row="4" x:Name="ExerciseButton"
               Text="Tilføj øvelse"
               Clicked="ExerciseButton_OnClicked" />
 
-      <Grid Margin="0,0,0,10">
+      <Grid Grid.Row="5" Margin="0,0,0,10">
         <Grid.ColumnDefinitions>
           <ColumnDefinition />
           <ColumnDefinition />
@@ -81,6 +95,6 @@
                 Text="Gem/Send"
                 Clicked="ActionButton_OnClicked" />
       </Grid>
-    </StackLayout>
+    </Grid>
   </ContentPage.Content>
 </ContentPage>
