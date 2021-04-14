@@ -3,10 +3,110 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MobileDev_Projekt.Pages.StandardPrograms">
     <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+        <StackLayout Padding="20">
+            <Label 
+                FontSize="Large" 
+                Text="Standard Programmer"
+                HorizontalOptions="Center" />
+
+            <ScrollView HeightRequest="3000">
+                <StackLayout Margin="20">
+                    <Frame BorderColor="Black" Padding="15">
+                        <StackLayout Orientation="Horizontal" Spacing="15" >
+                            <BoxView Color="Green"  />
+                            <StackLayout Orientation="Vertical">
+                                <Label Text="Knæ Program - Let" FontSize="Medium" VerticalOptions="Center"/>
+                                <Label Text="Antal øvelser: 3" FontSize="Small" VerticalOptions="Center"/>
+                            </StackLayout>
+                        </StackLayout>
+                    </Frame>
+
+                    <Frame BorderColor="Black" Padding="15">
+                        <StackLayout Orientation="Horizontal" Spacing="15" >
+                            <BoxView Color="Yellow"  />
+                            <StackLayout Orientation="Vertical">
+                                <Label Text="Knæ Program - Øvet" FontSize="Medium"/>
+                                <Label Text="Antal øvelser: 3" FontSize="Small"/>
+                            </StackLayout>
+                        </StackLayout>
+                    </Frame>
+
+                    <Frame BorderColor="Black" Padding="15">
+                        <StackLayout Orientation="Horizontal" Spacing="15" >
+                            <BoxView Color="Red"  />
+                            <StackLayout Orientation="Vertical">
+                                <Label Text="Knæ Program - Svær" FontSize="Medium" VerticalOptions="Center"/>
+                                <Label Text="Antal øvelser: 3" FontSize="Small" VerticalOptions="Center"/>
+                            </StackLayout>
+                        </StackLayout>
+                    </Frame>
+
+                    <Frame BorderColor="Black" Padding="15">
+                        <StackLayout Orientation="Horizontal" Spacing="15" >
+                            <BoxView Color="Green"  />
+                            <StackLayout Orientation="Vertical">
+                                <Label Text="Skulder Program - let" FontSize="Medium" VerticalOptions="Center"/>
+                                <Label Text="Antal øvelser: 3" FontSize="Small" VerticalOptions="Center"/>
+                            </StackLayout>
+                        </StackLayout>
+                    </Frame>
+
+                    <Frame BorderColor="Black" Padding="15">
+                        <StackLayout Orientation="Horizontal" Spacing="15" >
+                            <BoxView Color="Yellow"  />
+                            <StackLayout Orientation="Vertical">
+                                <Label Text="Skulder Program - Øvet" FontSize="Medium" VerticalOptions="Center"/>
+                                <Label Text="Antal øvelser: 3" FontSize="Small" VerticalOptions="Center"/>
+                            </StackLayout>
+                        </StackLayout>
+                    </Frame>
+
+                    <Frame BorderColor="Black" Padding="15">
+                        <StackLayout Orientation="Horizontal" Spacing="15" >
+                            <BoxView Color="Red"  />
+                            <StackLayout Orientation="Vertical">
+                                <Label Text="Knæ Program - Svær" FontSize="Medium" VerticalOptions="Center"/>
+                                <Label Text="Antal øvelser: 3" FontSize="Small" VerticalOptions="Center"/>
+                            </StackLayout>
+                        </StackLayout>
+                    </Frame>
+
+                    <Frame BorderColor="Black" Padding="15">
+                        <StackLayout Orientation="Horizontal" Spacing="15" >
+                            <BoxView Color="Green"  />
+                            <StackLayout Orientation="Vertical">
+                                <Label Text="Skulder Program - let" FontSize="Medium" VerticalOptions="Center"/>
+                                <Label Text="Antal øvelser: 3" FontSize="Small" VerticalOptions="Center"/>
+                            </StackLayout>
+                        </StackLayout>
+                    </Frame>
+
+                    <Frame BorderColor="Black" Padding="15">
+                        <StackLayout Orientation="Horizontal" Spacing="15" >
+                            <BoxView Color="Yellow"  />
+                            <StackLayout Orientation="Vertical">
+                                <Label Text="Skulder Program - Øvet" FontSize="Medium" VerticalOptions="Center"/>
+                                <Label Text="Antal øvelser: 3" FontSize="Small" VerticalOptions="Center"/>
+                            </StackLayout>
+                        </StackLayout>
+                    </Frame>
+                </StackLayout>
+            </ScrollView>
+
+            <StackLayout Orientation="Vertical">
+                <Button Text="Standard Øvelse"
+                VerticalOptions="CenterAndExpand"
+                HorizontalOptions="Center"
+                />
+
+
+                <Button Text="Nyt Standard Program"
+                VerticalOptions="CenterAndExpand"
+                HorizontalOptions="Center"
+                />
+
+            </StackLayout>
+
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
