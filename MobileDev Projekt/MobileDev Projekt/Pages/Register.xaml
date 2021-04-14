@@ -5,14 +5,17 @@
              Title="Register">
     <ContentPage.Content>
         <StackLayout>
-            <Label Text="Create Account"
-                VerticalOptions="CenterAndExpand" 
+            <Label
+                FontSize="Large"
+                Text="Create Account"
+                VerticalOptions="Start" 
                 HorizontalOptions="CenterAndExpand" />
-            <Entry HorizontalOptions="Center" VerticalOptions="Center" Placeholder="John Doe"></Entry>
-            <Entry HorizontalOptions="Center" VerticalOptions="Center" Placeholder="John@email.com"></Entry>
-            <Entry HorizontalOptions="Center" VerticalOptions="Center" Placeholder="Password" IsPassword="True"></Entry>
-            <Button Text="Create Account"></Button>
-            <Label HorizontalOptions="Center" VerticalOptions="End" Text="Already have an account? Sign in here"></Label>
+            <StackLayout VerticalOptions="CenterAndExpand" HorizontalOptions="Center" WidthRequest="320" Spacing="20" Padding="10">
+                <Entry Placeholder="John Doe"></Entry>
+                <Entry Placeholder="John@email.com"></Entry>
+                <Entry Placeholder="Password" IsPassword="True"></Entry>
+                <Button Padding="30" Text="Create Account"></Button>
+            </StackLayout>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
