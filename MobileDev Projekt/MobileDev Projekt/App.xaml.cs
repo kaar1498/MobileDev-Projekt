@@ -1,5 +1,5 @@
-﻿using MobileDev_Projekt.Pages;
 using System;
+using MobileDev_Projekt.Pages;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 

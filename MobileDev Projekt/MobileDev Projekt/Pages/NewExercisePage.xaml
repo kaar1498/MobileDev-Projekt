@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:models="clr-namespace:MobileDev_Projekt.Models;assembly=MobileDev Projekt"
+             x:Class="MobileDev_Projekt.Pages.NewExercisePage" x:DataType="models:ExerciseModel">
+  <ContentPage.Content>
+    <StackLayout Margin="5,0,5,0">
+      
+      <Grid Margin="0,0,0,10">
+        <Grid>
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition />
+          </Grid.ColumnDefinitions>
+          <Label Grid.Column="0"
+                 VerticalOptions="Center"
+                 Text="Navn" />
+          <Editor Grid.Column="1"
+                  FontSize="Small"
+                  HeightRequest="50"
+                  Text="{Binding .Name}"/>
+        </Grid>
+      </Grid>
+      
+      <Grid Margin="0,0,0,10">
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition />
+          <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        
+        <Button Grid.Column="0" x:Name="UndoButton"
+                               Text="Fortryd"
+                               Clicked="UndoButton_OnClicked"></Button>
+        <Button Grid.Column="1" x:Name="CreateButton"
+                Text="Opret"
+                Clicked="CreateButton_OnClicked"></Button>
+      </Grid>
+    </StackLayout>
+  </ContentPage.Content>
+</ContentPage>

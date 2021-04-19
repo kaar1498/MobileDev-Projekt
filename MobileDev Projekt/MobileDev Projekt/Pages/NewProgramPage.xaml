@@ -1,0 +1,92 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:models="clr-namespace:MobileDev_Projekt.Models;assembly=MobileDev Projekt"
+             x:Class="MobileDev_Projekt.Pages.NewProgramPage"
+             Title="Nyt program"
+             x:DataType="models:NewProgramPageModel">
+
+  <StackLayout Margin="5,0,5,0">
+
+    <Grid Margin="0,0,0,10">
+      <Grid>
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition />
+          <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <Label Grid.Column="0"
+               VerticalOptions="Center"
+               Text="{Binding InformationModel.Name}" />
+        <Editor Grid.Column="1"
+                FontSize="Small"
+                HeightRequest="50"
+                Text="{Binding InformationModel.Value}" />
+      </Grid>
+    </Grid>
+
+    <ListView
+      ItemsSource="{Binding ExerciseModels}">
+      <ListView.ItemTemplate>
+        <DataTemplate x:DataType="models:ExerciseModel">
+          <ViewCell>
+            <SwipeView>
+              <SwipeView.LeftItems>
+                <SwipeItems>
+                  <SwipeItem Text="Edit"
+                             BackgroundColor="LimeGreen"
+                             Invoked="EditSwipeItem_OnInvoked" />
+                  <SwipeItem Text="Delete"
+                             BackgroundColor="OrangeRed"
+                             Invoked="DeleteSwipeItem_OnInvoked" />
+                </SwipeItems>
+              </SwipeView.LeftItems>
+              <Grid>
+                <Grid.ColumnDefinitions>
+                  <ColumnDefinition Width="Auto" />
+                  <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <Image Grid.Column="0"
+                       Source="{Binding Image}"
+                       WidthRequest="50"
+                       HeightRequest="50"/>
+                <Label Grid.Column="1"
+                       Margin="0,0,0,0"
+                       VerticalOptions="Center"
+                       Text="{Binding Name}" />
+              </Grid>
+            </SwipeView>
+          </ViewCell>
+        </DataTemplate>
+      </ListView.ItemTemplate>
+    </ListView>
+
+
+
+    <Grid Margin="0,0,0,10">
+      <Grid.RowDefinitions>
+        <RowDefinition />
+        <RowDefinition />
+      </Grid.RowDefinitions>
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition />
+        <ColumnDefinition />
+      </Grid.ColumnDefinitions>
+      
+      <Button Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="0"
+              x:Name="ExerciseButton"
+              Text="Tilføj øvelse"
+              HeightRequest="75"
+              Clicked="ExerciseButton_OnClicked" />
+      <Button Grid.Column="0" Grid.Row="1"
+              x:Name="UndoButton"
+              Text="Fortryd"
+              Clicked="UndoButton_OnClicked" />
+      <Button Grid.Column="1" Grid.Row="1"
+              x:Name="ActionButton"
+              Text="Gem/Send"
+              Clicked="ActionButton_OnClicked" />
+    </Grid>
+  </StackLayout>
+
+</ContentPage>
