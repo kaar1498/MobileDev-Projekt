@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using MobileDev_Projekt.Pages;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -11,7 +11,7 @@ namespace MobileDev_Projekt
         {
             InitializeComponent();
 
-            MainPage = new NavigationPage(new NewProgramPage());
+            MainPage = new HomePage();
         }
 
         protected override void OnStart()
