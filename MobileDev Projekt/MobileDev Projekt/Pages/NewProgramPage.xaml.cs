@@ -27,12 +27,12 @@ namespace MobileDev_Projekt.Pages
 
     private void UndoButton_OnClicked(object sender, EventArgs e)
     {
-      //Navigation.PopAsync();
+      Navigation.PopAsync();
     }
 
     private void ActionButton_OnClicked(object sender, EventArgs e)
     {
-      //Navigation.PushAsync(new PublishPage());
+      //Navigation.PushAsync(new MainPage());
     }
 
     private void EditSwipeItem_OnInvoked(object sender, EventArgs e)
