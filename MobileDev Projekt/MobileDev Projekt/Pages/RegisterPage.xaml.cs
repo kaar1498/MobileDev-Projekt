@@ -10,11 +10,16 @@ using Xamarin.Forms.Xaml;
 namespace MobileDev_Projekt.Pages
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class Register : ContentPage
+    public partial class RegisterPage : ContentPage
     {
-        public Register()
+        public RegisterPage()
         {
             InitializeComponent();
+        }
+
+        private void CreateButton_Clicked(object sender, EventArgs e)
+        {
+            Navigation.PushAsync(new HomePage());
         }
     }
 }

@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="MobileDev_Projekt.Pages.Register"
+             x:Class="MobileDev_Projekt.Pages.RegisterPage"
              Title="Register">
     <ContentPage.Content>
         <StackLayout>
@@ -14,7 +14,7 @@
                 <Entry Placeholder="John Doe"></Entry>
                 <Entry Placeholder="John@email.com"></Entry>
                 <Entry Placeholder="Password" IsPassword="True"></Entry>
-                <Button Padding="30" Text="Create Account"></Button>
+                <Button Padding="30" Text="Create Account" Clicked="CreateButton_Clicked"></Button>
             </StackLayout>
         </StackLayout>
     </ContentPage.Content>

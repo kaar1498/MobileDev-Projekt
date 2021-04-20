@@ -32,7 +32,7 @@ namespace MobileDev_Projekt.Pages
 
     private void ActionButton_OnClicked(object sender, EventArgs e)
     {
-      //Navigation.PushAsync(new MainPage());
+      Navigation.PushAsync(new MainPage());
     }
 
     private void EditSwipeItem_OnInvoked(object sender, EventArgs e)

@@ -10,21 +10,21 @@ using Xamarin.Forms.Xaml;
 namespace MobileDev_Projekt.Pages
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class HomePage : ContentPage
+    public partial class LoginPage : ContentPage
     {
-        public HomePage()
+        public LoginPage()
         {
             InitializeComponent();
         }
 
-        private void NewProgramButton_Clicked(object sender, EventArgs e)
+        private void RegisterButton_Clicked(object sender, EventArgs e)
         {
-           Navigation.PushAsync(new NewProgramPage());
+            Navigation.PushAsync(new RegisterPage());
         }
 
-        private void StndardProgramButton_Clicked(object sender, EventArgs e)
+        private void LoginButton_Clicked(object sender, EventArgs e)
         {
-            Navigation.PushAsync(new StandardPrograms());
+            Navigation.PushAsync(new HomePage());
         }
     }
 }
