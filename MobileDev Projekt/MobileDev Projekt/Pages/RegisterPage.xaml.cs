@@ -16,5 +16,10 @@ namespace MobileDev_Projekt.Pages
         {
             InitializeComponent();
         }
+
+        private void CreateButton_Clicked(object sender, EventArgs e)
+        {
+            Navigation.PushAsync(new HomePage());
+        }
     }
 }

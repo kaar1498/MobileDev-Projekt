@@ -16,5 +16,15 @@ namespace MobileDev_Projekt.Pages
         {
             InitializeComponent();
         }
+
+        private void NewProgramButton_Clicked(object sender, EventArgs e)
+        {
+           Navigation.PushAsync(new NewProgramPage());
+        }
+
+        private void StndardProgramButton_Clicked(object sender, EventArgs e)
+        {
+            Navigation.PushAsync(new StandardPrograms());
+        }
     }
 }

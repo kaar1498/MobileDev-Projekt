@@ -14,7 +14,7 @@
                 <Entry Placeholder="John Doe"></Entry>
                 <Entry Placeholder="John@email.com"></Entry>
                 <Entry Placeholder="Password" IsPassword="True"></Entry>
-                <Button Padding="30" Text="Create Account"></Button>
+                <Button Padding="30" Text="Create Account" Clicked="CreateButton_Clicked"></Button>
             </StackLayout>
         </StackLayout>
     </ContentPage.Content>

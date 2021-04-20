@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             Title="Login"
              x:Class="MobileDev_Projekt.Pages.LoginPage">
     <ContentPage.Content>
         <StackLayout Spacing="30" Padding="50">
@@ -18,8 +19,8 @@
                     Placeholder="Password"/>
             </StackLayout>
             <StackLayout Spacing="10">
-                <Button WidthRequest="320" HeightRequest="70" VerticalOptions="End" HorizontalOptions="Center" Text="Login"/>
-                <Button WidthRequest="320" HeightRequest="70" VerticalOptions="End" HorizontalOptions="Center" Text="Opret"/>
+                <Button WidthRequest="320" HeightRequest="70" VerticalOptions="End" HorizontalOptions="Center" Text="Login" Clicked="LoginButton_Clicked"/>
+                <Button WidthRequest="320" HeightRequest="70" VerticalOptions="End" HorizontalOptions="Center" Text="Opret" Clicked="RegisterButton_Clicked"/>
             </StackLayout>
         </StackLayout>
     </ContentPage.Content>
