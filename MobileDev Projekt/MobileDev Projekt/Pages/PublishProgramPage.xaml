@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             Title="Send"
+             x:Class="MobileDev_Projekt.Pages.PublishProgramPage">
+    <ContentPage.Content>
+        <StackLayout Margin="5,0,5,0">
+            <ScrollView>
+                <StackLayout HorizontalOptions="Center" VerticalOptions="Center" HeightRequest="350" WidthRequest="200">
+                    <ListView VerticalOptions="FillAndExpand" BackgroundColor="red">
+                        <ListView.ItemsSource>
+                            <x:Array Type="{x:Type x:String}">
+                                <x:String>mono</x:String>
+                                <x:String>monodroid</x:String>
+                                <x:String>monotouch</x:String>
+                                <x:String>monorail</x:String>
+                                <x:String>monodevelop</x:String>
+                                <x:String>monotone</x:String>
+                                <x:String>monopoly</x:String>
+                                <x:String>monomodal</x:String>
+                                <x:String>mononucleosis</x:String>
+                            </x:Array>
+                        </ListView.ItemsSource>
+                    </ListView>
+                </StackLayout>
+            </ScrollView>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="2*" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Button Text="Fortryd" Clicked="Button_Clicked"></Button>
+                <Button Grid.Column="1" Text="Send" Clicked="Button_Clicked2"></Button>
+            </Grid>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
