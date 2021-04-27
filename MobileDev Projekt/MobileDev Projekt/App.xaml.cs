@@ -11,7 +11,9 @@ namespace MobileDev_Projekt
         {
             InitializeComponent();
 
-            MainPage = new NavigationPage(new LoginPage());
+            //LoginPage
+
+            MainPage = new NavigationPage(new PublishProgramPage());
         }
 
         protected override void OnStart()
