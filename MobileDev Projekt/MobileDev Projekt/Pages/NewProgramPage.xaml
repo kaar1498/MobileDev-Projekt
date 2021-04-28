@@ -61,7 +61,7 @@
                   <ColumnDefinition />
                 </Grid.ColumnDefinitions>
                 <Image Grid.Column="0"
-                       Source="{Binding Image}"
+                       Source="{Binding ImageModels}"
                        WidthRequest="50"
                        HeightRequest="50"/>
                 <Label Grid.Column="1"

@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using MobileDev_Projekt.Annotations;
+using Xamarin.Forms;
 
 namespace MobileDev_Projekt.Models
 {
@@ -91,7 +92,7 @@ namespace MobileDev_Projekt.Models
   public class ExerciseModel : INotifyPropertyChanged
   {
     private string _name;
-    private string _image;
+    private ObservableCollection<ImageModel> _imageModels = new();
     private int _duration = 1;
     private int _restFrequency = 1;
     private int _restDuration = 1;
@@ -152,13 +153,49 @@ namespace MobileDev_Projekt.Models
       }
     }
 
-    public string Image
+    public ObservableCollection<ImageModel> ImageModels
+    {
+      get => _imageModels;
+      set
+      {
+        if (value == _imageModels) return;
+        _imageModels = value;
+        OnPropertyChanged();
+      }
+    }
+
+    public event PropertyChangedEventHandler PropertyChanged;
+
+    [NotifyPropertyChangedInvocator]
+    protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+    {
+      PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+    }
+  }
+
+  public class ImageModel : INotifyPropertyChanged
+  {
+    private ImageSource _image;
+    private string _description;
+
+    public ImageSource Image
     {
       get => _image;
       set
       {
-        if (value == _image) return;
+        if (Equals(value, _image)) return;
         _image = value;
+        OnPropertyChanged();
+      }
+    }
+
+    public string Description
+    {
+      get => _description;
+      set
+      {
+        if (value == _description) return;
+        _description = value;
         OnPropertyChanged();
       }
     }

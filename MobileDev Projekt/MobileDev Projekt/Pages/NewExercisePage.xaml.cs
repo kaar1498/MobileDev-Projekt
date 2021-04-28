@@ -38,16 +38,24 @@ namespace MobileDev_Projekt.Pages
                 return;
             }
 
+            _remoteModel.ImageModels = _model.ImageModels;
             _remoteModel.Name = _model.Name;
-            _remoteModel.Image = _model.Image;
+            _remoteModel.Repetitions = _model.Repetitions;
+            _remoteModel.Duration = _model.Duration;
+            _remoteModel.RestFrequency = _model.RestFrequency;
+            _remoteModel.RestDuration = _model.RestDuration;
             Navigation.PopAsync();
         }
+        
         private async void TakePhotoAction()
         {
             var photo = await MediaPicker.CapturePhotoAsync(new MediaPickerOptions { Title = "Tag et billede" });
             if (photo == null) return;
             var stream = await photo.OpenReadAsync();
-            var imageSource = ImageSource.FromStream(() => stream);
+            _model.ImageModels.Add(new ImageModel
+            {
+                Image = ImageSource.FromStream(() => stream)
+            });
         }
 
         private async void PickPhotoAction()
@@ -55,21 +63,25 @@ namespace MobileDev_Projekt.Pages
             var photo = await MediaPicker.PickPhotoAsync(new MediaPickerOptions { Title = "Vælg et billede" });
             if (photo == null) return;
             var stream = await photo.OpenReadAsync();
-            PhotoImage.Source = ImageSource.FromStream(() => stream); //PhotoImage.Source
+            _model.ImageModels.Add(new ImageModel
+            {
+                Image = ImageSource.FromStream(() => stream)
+            });
         }
 
         private async void AddPictureButton_Clicked(object sender, EventArgs e)
         {
-            string action = await DisplayActionSheet("Hvordan vil du tilføje billedet?", "Cancel", null, "Kamera", "Galleri");
+            var action = await DisplayActionSheet("Hvordan vil du tilføje billedet?", "Cancel", null, "Kamera", "Galleri");
             Debug.WriteLine("Action:" + action);
 
-            if (action == "Kamera")
+            switch (action)
             {
-                TakePhotoAction();
-            }
-            else if (action == "Galleri")
-            {
-                PickPhotoAction();
+                case "Kamera":
+                    TakePhotoAction();
+                    break;
+                case "Galleri":
+                    PickPhotoAction();
+                    break;
             }
         }
     }

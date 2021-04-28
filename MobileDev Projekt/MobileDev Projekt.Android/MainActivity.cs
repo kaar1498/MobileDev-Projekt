@@ -8,6 +8,7 @@ using Android.Widget;
 using Android.OS;
 using FFImageLoading.Forms.Platform;
 using FFImageLoading.Svg.Forms;
+using Sharpnado.HorizontalListView.Droid;
 
 namespace MobileDev_Projekt.Droid
 {
@@ -19,6 +20,8 @@ namespace MobileDev_Projekt.Droid
             TabLayoutResource = Resource.Layout.Tabbar;
             ToolbarResource = Resource.Layout.Toolbar;
 
+            SharpnadoInitializer.Initialize();
+            
             base.OnCreate(savedInstanceState);
 
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
