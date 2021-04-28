@@ -12,9 +12,11 @@ namespace MobileDev_Projekt.Pages
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class LoginPage : ContentPage
     {
+        private readonly ApiService _apiService;
         public LoginPage()
         {
             InitializeComponent();
+            _apiService = new ApiService();
         }
 
         private void RegisterButton_Clicked(object sender, EventArgs e)
@@ -22,17 +24,21 @@ namespace MobileDev_Projekt.Pages
             Navigation.PushAsync(new RegisterPage());
         }
 
-        private void LoginButton_Clicked(object sender, EventArgs e)
+        private async void LoginButton_Clicked(object sender, EventArgs e)
         {
             var username = UsernameEntry.Text;
             var password = PasswordEntry.Text;
-            var isValid = !string.IsNullOrWhiteSpace(username) && !string.IsNullOrWhiteSpace(password); //TODO Validate with API
+            
+            var isValid = !string.IsNullOrWhiteSpace(username) && !string.IsNullOrWhiteSpace(password);
+            isValid = await _apiService.Login() && isValid; //TODO Validate with API
+            
             if (!isValid)
             {
                 DependencyService.Get<IMessage>().LongAlert("Username or Password not valid");
                 return;
             }
-            Navigation.PushAsync(new HomePage());
+            
+            await Navigation.PushAsync(new HomePage());
         }
     }
 }

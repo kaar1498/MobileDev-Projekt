@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using MobileDev_Projekt.Services;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -12,50 +13,25 @@ namespace MobileDev_Projekt.Pages
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class RegisterPage : ContentPage
     {
+        private readonly ApiService _apiService;
         public RegisterPage()
         {
             InitializeComponent();
+            _apiService = new ApiService();
         }
-
-        private bool PostUser(string username, string password, string email, string address, int phoneNumber)
+        
+        private async Task CreateNewUser(string name, string username, string password, string confirmPassword,
+            string email, string address, int phoneNumber)
         {
-            var connectionString = "INSERT CONNECTIONSTRING HERE";
-
-            if (true)
-            {
-                // Hvis der kan skabes connection til serveren brug inputs værdierne til at byg en bruger.
-
-                //User newUser = new User();
-                //newUser.userName = userName;
-                //newUser.password = passWord;
-                //newUser.email = email;
-                //newUser.address = address;
-                //newUser.phoneNumber = phoneNumber;
-            }
-            else
-            {
-                return false;
-            }
-
-            // Post newUser to DB.
-            // Remember to Hash data.
-
-            return true;
-        }
-
-        public async Task CreateNewUser(string username, string password, string confirmPassword, string email, string address, int phoneNumber)
-        {
-            bool userCreated = false;
             IsBusy = true;
-
-            if (CheckPassword(password, confirmPassword) == true)
-            {
-                userCreated = PostUser(username, password, email, address, phoneNumber);
-            }
-
             try
             {
-                if (userCreated == true)
+                if (!CheckPassword(password, confirmPassword))
+                {
+                    return;
+                }
+                
+                if (await _apiService.Register(name, username, password, email, address, phoneNumber))
                 {
                     // hvis brugeren blev oprette og posted til serveren så redirect brugeren til mainPage.
                     await Navigation.PushModalAsync(new HomePage());
@@ -63,7 +39,7 @@ namespace MobileDev_Projekt.Pages
             }
             catch (Exception e)
             {
-                await DisplayAlert("Error", e.Message.ToString(), "OK");
+                await DisplayAlert("Error", e.Message, "OK");
             }
             finally
             {
@@ -73,19 +49,47 @@ namespace MobileDev_Projekt.Pages
 
         private async void CreateButton_Clicked(object sender, EventArgs e)
         {
-            await CreateNewUser(UserName.Text, PasswordEntry.Text, PasswordRepeatEntry.Text, EmailEntry.Text, Address.Text, int.Parse(PhoneNumberEntry.Text));
+            if (string.IsNullOrWhiteSpace(UserName.Text))
+            {
+                DependencyService.Get<IMessage>().LongAlert("Brugernavn skal være udfyldt");
+                return;
+            }
+            if (string.IsNullOrWhiteSpace(NameEntry.Text))
+            {
+                DependencyService.Get<IMessage>().LongAlert("Navn skal være udfyldt");
+                return;
+            }
+            if (string.IsNullOrWhiteSpace(PasswordEntry.Text))
+            {
+                DependencyService.Get<IMessage>().LongAlert("Adgangskode navn skal være udfyldt");
+                return;
+            }
+            if (string.IsNullOrWhiteSpace(PasswordRepeatEntry.Text))
+            {
+                DependencyService.Get<IMessage>().LongAlert("Adgangskode navn skal være udfyldt");
+                return;
+            }
+            if (string.IsNullOrWhiteSpace(EmailEntry.Text))
+            {
+                DependencyService.Get<IMessage>().LongAlert("Email navn skal være udfyldt");
+                return;
+            }
+            if (string.IsNullOrWhiteSpace(Address.Text))
+            {
+                DependencyService.Get<IMessage>().LongAlert("Addresse navn skal være udfyldt");
+                return;
+            }
+            if (string.IsNullOrWhiteSpace(PhoneNumberEntry.Text))
+            {
+                DependencyService.Get<IMessage>().LongAlert("Telefon nummer navn skal være udfyldt");
+                return;
+            }
+            await CreateNewUser(NameEntry.Text, UserName.Text, PasswordEntry.Text, PasswordRepeatEntry.Text, EmailEntry.Text, Address.Text, int.Parse(PhoneNumberEntry.Text));
         }
 
-        private bool CheckPassword(string password, string confirmPassword)
+        private static bool CheckPassword(string password, string confirmPassword)
         {
-            if (password == confirmPassword)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return password == confirmPassword;
         }
 
         private void UndoButton_Clicked(object sender, EventArgs e)

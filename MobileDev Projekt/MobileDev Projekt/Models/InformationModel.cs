@@ -1,21 +1,32 @@
-﻿using System.Collections.ObjectModel;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using MobileDev_Projekt.Annotations;
 
 namespace MobileDev_Projekt.Models
 {
-  public class HomePageModel : INotifyPropertyChanged
+  public class InformationModel : INotifyPropertyChanged
   {
-    private ObservableCollection<ProgramModel> _programModels;
+    private string _title;
+    private string _value;
 
-    public ObservableCollection<ProgramModel> ProgramModels
+    public string Title
     {
-      get => _programModels;
+      get => _title;
       set
       {
-        if (Equals(value, _programModels)) return;
-        _programModels = value;
+        if (value == _title) return;
+        _title = value;
+        OnPropertyChanged();
+      }
+    }
+
+    public string Value
+    {
+      get => _value;
+      set
+      {
+        if (value == _value) return;
+        _value = value;
         OnPropertyChanged();
       }
     }

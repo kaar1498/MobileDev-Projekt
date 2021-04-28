@@ -9,18 +9,21 @@ namespace MobileDev_Projekt.Pages
   [XamlCompilation(XamlCompilationOptions.Compile)]
   public partial class NewProgramPage
   {
-    private NewProgramPageModel Model { get; } = new NewProgramPageModel();
-    public NewProgramPage()
+    private readonly ProgramModel _model;
+
+    public NewProgramPage(ProgramModel model = null)
     {
+      _model = model;
+      _model ??= new ProgramModel();
       InitializeComponent();
-      BindingContext = Model;
+      BindingContext = _model;
     }
     
     private void ExerciseButton_OnClicked(object sender, EventArgs e)
     {
       var exerciseModel = new ExerciseModel();
-      Model.ExerciseModels.Add(exerciseModel);
-      Navigation.PushAsync(new NewExercisePage(exerciseModel, Model));
+      _model.ExerciseModels.Add(exerciseModel);
+      Navigation.PushAsync(new NewExercisePage(exerciseModel, _model));
     }
 
     private void UndoButton_OnClicked(object sender, EventArgs e)
@@ -30,7 +33,7 @@ namespace MobileDev_Projekt.Pages
 
     private void ActionButton_OnClicked(object sender, EventArgs e)
     {
-      if (string.IsNullOrWhiteSpace(Model.InformationModel.Value))
+      if (string.IsNullOrWhiteSpace(_model.Name))
       {
         DependencyService.Get<IMessage>().LongAlert("Tiitel skal udfyldes");
         return;
@@ -42,16 +45,16 @@ namespace MobileDev_Projekt.Pages
     {
       var item = sender as SwipeItem;
       var exerciseModel = item.BindingContext as ExerciseModel;
-      Model.ExerciseModels.Remove(exerciseModel);
+      _model.ExerciseModels.Remove(exerciseModel);
       Navigation.PushAsync(new NewExercisePage(exerciseModel));
-      Model.ExerciseModels.Add(exerciseModel);
+      _model.ExerciseModels.Add(exerciseModel);
     }
 
     private void DeleteSwipeItem_OnInvoked(object sender, EventArgs e)
     {
       var item = sender as SwipeItem;
       var exerciseModel = item.BindingContext as ExerciseModel;
-      Model.ExerciseModels.Remove(exerciseModel);
+      _model.ExerciseModels.Remove(exerciseModel);
     }
   }
 }

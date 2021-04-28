@@ -13,9 +13,9 @@ namespace MobileDev_Projekt.Pages
     {
         private readonly ExerciseModel _model;
         private readonly ExerciseModel _remoteModel;
-        private readonly NewProgramPageModel _programPageModel;
+        private readonly ProgramModel _programPageModel;
 
-        public NewExercisePage(ExerciseModel model, NewProgramPageModel programPageModel = null)
+        public NewExercisePage(ExerciseModel model, ProgramModel programPageModel = null)
         {
             _model = model ??= new ExerciseModel();
             _remoteModel = model;

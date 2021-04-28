@@ -1,7 +1,7 @@
 ﻿using System;
-using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using MobileDev_Projekt.Models;
+using MobileDev_Projekt.Services;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -16,21 +16,11 @@ namespace MobileDev_Projekt.Pages
             InitializeComponent();
             _model = new HomePageModel();
             BindingContext = _model;
+            var apiService = new ApiService();
             Task.Run(async () =>
             {
-                await Task.Delay(3000);
-                _model.Exercises = new ObservableCollection<string>
-                {
-                    "Range of Motion",
-                    "Stretching",
-                    "Aerobic",
-                    "Balancing",
-                    "Aquatic",
-                    "Strengthening",
-                    "Breathing",
-                    "Relaxation"
-                };
-            }); //TODO Load from API
+                _model.ProgramModels = await apiService.GetPrograms();
+            });
         }
 
         private void NewProgramButton_Clicked(object sender, EventArgs e)
@@ -38,7 +28,7 @@ namespace MobileDev_Projekt.Pages
            Navigation.PushAsync(new NewProgramPage());
         }
 
-        private void StndardProgramButton_Clicked(object sender, EventArgs e)
+        private void StandardProgramButton_Clicked(object sender, EventArgs e)
         {
             Navigation.PushAsync(new StandardPrograms());
         }

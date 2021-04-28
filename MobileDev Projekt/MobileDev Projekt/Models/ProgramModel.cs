@@ -5,17 +5,29 @@ using MobileDev_Projekt.Annotations;
 
 namespace MobileDev_Projekt.Models
 {
-  public class HomePageModel : INotifyPropertyChanged
+  public class ProgramModel : INotifyPropertyChanged
   {
-    private ObservableCollection<ProgramModel> _programModels;
+    private string _name;
+    private ObservableCollection<ExerciseModel> _exerciseModels = new();
 
-    public ObservableCollection<ProgramModel> ProgramModels
+    public string Name
     {
-      get => _programModels;
+      get => _name;
       set
       {
-        if (Equals(value, _programModels)) return;
-        _programModels = value;
+        if (value == _name) return;
+        _name = value;
+        OnPropertyChanged();
+      }
+    }
+
+    public ObservableCollection<ExerciseModel> ExerciseModels
+    {
+      get => _exerciseModels;
+      set
+      {
+        if (Equals(value, _exerciseModels)) return;
+        _exerciseModels = value;
         OnPropertyChanged();
       }
     }

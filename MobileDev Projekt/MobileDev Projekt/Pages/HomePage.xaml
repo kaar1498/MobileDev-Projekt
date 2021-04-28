@@ -5,6 +5,7 @@
              xmlns:local="clr-namespace:MobileDev_Projekt"
              xmlns:forms="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
              xmlns:models="clr-namespace:MobileDev_Projekt.Models;assembly=MobileDev Projekt"
+             xmlns:renderedViews="http://sharpnado.com"
              NavigationPage.HasNavigationBar="false"
              x:Class="MobileDev_Projekt.Pages.HomePage"
              BackgroundColor="{StaticResource AccentColor}"
@@ -26,24 +27,48 @@
              FontFamily="TitleFont"
              FontSize="Title"
              HorizontalOptions="Center"
-             Margin="0,15,0,0"/>
-      <ScrollView Grid.Row="2"
-                  Margin="0,50,0,0">
-        <ListView ItemsSource="{Binding Exercises}"
-                  HeightRequest="1">
-            <ListView.ItemTemplate>
-              <DataTemplate>
-                <ViewCell>
-                  <Label Text="{Binding .}"
+             Margin="0,15,0,15"/>
+      
+      <renderedViews:HorizontalListView Grid.Row="2"
+                                        ItemsSource="{Binding ProgramModels}"
+                                        ItemHeight="50"
+                                        CollectionPadding="0,0,0,0"
+                                        ListLayout="Vertical"
+                                        EnableDragAndDrop="True">
+        <renderedViews:HorizontalListView.ItemTemplate>
+          <DataTemplate x:DataType="models:ProgramModel">
+            <renderedViews:DraggableViewCell x:Name="DraggableViewCell">
+              <ContentView>
+                <StackLayout>
+                  <Label Text="{Binding Name}"
                          TextColor="{StaticResource MainColor}"
                          HorizontalOptions="Center"
-                         VerticalOptions="Center"
                          FontFamily="TextFont" />
-                </ViewCell>
-              </DataTemplate>
-            </ListView.ItemTemplate>
-          </ListView>
-      </ScrollView>
+                  <Line HeightRequest="0.1"
+                        BackgroundColor="{StaticResource MainColor}"/>
+                </StackLayout>
+              </ContentView>
+            </renderedViews:DraggableViewCell>
+          </DataTemplate>
+        </renderedViews:HorizontalListView.ItemTemplate>
+      </renderedViews:HorizontalListView>
+      <!-- <ScrollView Grid.Row="2" -->
+      <!--             Margin="0,50,0,0"> -->
+      <!--   <ListView ItemsSource="{Binding ProgramModels}" -->
+      <!--             HeightRequest="1"> -->
+      <!--       <ListView.ItemTemplate> -->
+      <!--         <DataTemplate> -->
+      <!--           <ViewCell> -->
+      <!--             <Label Text="{Binding .}" -->
+      <!--                    TextColor="{StaticResource MainColor}" -->
+      <!--                    HorizontalOptions="Center" -->
+      <!--                    VerticalOptions="Center" -->
+      <!--                    FontFamily="TextFont" /> -->
+      <!--           </ViewCell> -->
+      <!--         </DataTemplate> -->
+      <!--       </ListView.ItemTemplate> -->
+      <!--     </ListView> -->
+      <!-- </ScrollView> -->
       <Grid Grid.Row="3"
             Margin="5,0,5,35">
         <Grid.RowDefinitions>
@@ -55,7 +80,7 @@
         </Grid.ColumnDefinitions>
         <Button Grid.Column="0" 
                 Text="Standard programmer" 
-                Clicked="StndardProgramButton_Clicked"/>
+                Clicked="StandardProgramButton_Clicked"/>
         <Button Grid.Column="1" 
                 Text="Nyt program" 
                 Clicked="NewProgramButton_Clicked" />

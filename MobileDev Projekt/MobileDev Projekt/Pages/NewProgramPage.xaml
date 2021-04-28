@@ -6,7 +6,7 @@
              x:Class="MobileDev_Projekt.Pages.NewProgramPage"
              Title="Nyt program"
              NavigationPage.HasNavigationBar="false"
-             x:DataType="models:NewProgramPageModel"
+             x:DataType="models:ProgramModel"
              BackgroundColor="{StaticResource AccentColor}">
 
   <StackLayout Margin="15,0,15,0">
@@ -30,12 +30,12 @@
                VerticalOptions="Center"
                FontFamily="TextFont"
                FontSize="Body"
-               Text="{Binding InformationModel.Title}" />
+               Text="Navn" />
         <Editor Grid.Column="1"
                 FontSize="Small"
                 FontFamily="TextLightFont"
                 HeightRequest="40"
-                Text="{Binding InformationModel.Value}" />
+                Text="{Binding Name}" />
       </Grid>
     </Grid>
 
