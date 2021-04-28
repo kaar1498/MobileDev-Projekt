@@ -21,11 +21,10 @@
 
       <Button Text="Tilføj Billeder" Clicked="AddPictureButton_Clicked" />
 
-      <renderedViews:HorizontalListView x:Name="HorizontalListView"
-                                        CollectionPadding="10,10,10,75"
-                                        ItemHeight="250"
-                                        ItemWidth="250"
-                                        ItemsSource="{Binding ImageModels}"
+      <renderedViews:HorizontalListView ItemsSource="{Binding ImageModels}"
+                                        ItemHeight="120"
+                                        ItemWidth="120"
+                                        CollectionPadding="10,30,10,75"
                                         ListLayout="Linear"
                                         SnapStyle="Center"
                                         EnableDragAndDrop="True">
@@ -34,7 +33,7 @@
             <renderedViews:DraggableViewCell x:Name="DraggableViewCell">
               <ContentView>
                 <Image Source="{Binding Image}"
-                       HeightRequest="250"/>
+                       HeightRequest="120"/>
               </ContentView>
             </renderedViews:DraggableViewCell>
           </DataTemplate>
