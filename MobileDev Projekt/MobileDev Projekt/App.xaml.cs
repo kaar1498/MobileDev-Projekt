@@ -11,7 +11,7 @@ namespace MobileDev_Projekt
         {
             InitializeComponent();
 
-            MainPage = new StandardPrograms();
+            MainPage = new StandardExersices();
         }
 
         protected override void OnStart()
