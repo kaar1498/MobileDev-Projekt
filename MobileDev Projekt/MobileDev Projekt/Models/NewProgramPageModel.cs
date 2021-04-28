@@ -15,7 +15,7 @@ namespace MobileDev_Projekt.Models
     {
       InformationModel = new InformationModel
       {
-        Name = "Program Navn"
+        Title = "Titel"
       };
 
       ExerciseModels = new ObservableCollection<ExerciseModel>();
@@ -54,16 +54,16 @@ namespace MobileDev_Projekt.Models
 
   public class InformationModel : INotifyPropertyChanged
   {
-    private string _name;
+    private string _title;
     private string _value;
 
-    public string Name
+    public string Title
     {
-      get => _name;
+      get => _title;
       set
       {
-        if (value == _name) return;
-        _name = value;
+        if (value == _title) return;
+        _title = value;
         OnPropertyChanged();
       }
     }
