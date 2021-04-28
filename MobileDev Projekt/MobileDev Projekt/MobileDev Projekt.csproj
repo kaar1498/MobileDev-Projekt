@@ -82,4 +82,10 @@
   <ItemGroup>
     <Folder Include="images" />
   </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Pages\StandardExersices.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
 </Project>
