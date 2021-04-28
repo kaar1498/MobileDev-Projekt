@@ -7,24 +7,27 @@
              x:Class="MobileDev_Projekt.Pages.NewExercisePage" x:DataType="models:ExerciseModel">
   <ContentPage.Content>
     <StackLayout Margin="5,0,5,0">
-      
-      <Grid Margin="0,0,0,10">
-        <Grid>
-          <Grid.ColumnDefinitions>
-            <ColumnDefinition />
-            <ColumnDefinition />
-          </Grid.ColumnDefinitions>
-          <Label Grid.Column="0"
+            <Button Text="Tilføj Billeder" Clicked="AddPictureButton_Clicked" />
+            <Image x:Name="PhotoImage"/>
+
+            <Grid Margin="0,0,0,10">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <Label Grid.Column="0"
                  VerticalOptions="Center"
                  Text="Navn" />
-          <Editor Grid.Column="1"
+                    <Editor Grid.Column="1"
                   FontSize="Small"
                   HeightRequest="50"
                   Text="{Binding .Name}"/>
-        </Grid>
-      </Grid>
-      
-      <Grid Margin="0,0,0,10">
+                </Grid>
+            </Grid>
+
+            <Grid Margin="0,0,0,10">
         <Grid.ColumnDefinitions>
           <ColumnDefinition />
           <ColumnDefinition />
