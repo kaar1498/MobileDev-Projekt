@@ -1,45 +1,65 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8"?>
+
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:MobileDev_Projekt"
-             x:Class="MobileDev_Projekt.Pages.HomePage">
-    <ContentPage.Content>
-        <StackLayout>
-            <Image HeightRequest="200" 
-                    Source="{local:ImageResource MobileDev_Projekt.images.logo.png}"
-                    HorizontalOptions="Center"
-                    VerticalOptions="Center"
-                    Aspect="AspectFit" />
-            <ScrollView>
-                <StackLayout HorizontalOptions="Center" VerticalOptions="Center" HeightRequest="350" WidthRequest="200">
-                    <ListView VerticalOptions="FillAndExpand" BackgroundColor="red">
-                        <ListView.ItemsSource>
-                            <x:Array Type="{x:Type x:String}">
-                                <x:String>mono</x:String>
-                                <x:String>monodroid</x:String>
-                                <x:String>monotouch</x:String>
-                                <x:String>monorail</x:String>
-                                <x:String>monodevelop</x:String>
-                                <x:String>monotone</x:String>
-                                <x:String>monopoly</x:String>
-                                <x:String>monomodal</x:String>
-                                <x:String>mononucleosis</x:String>
-                            </x:Array>
-                        </ListView.ItemsSource>
-                    </ListView>
-                </StackLayout>
-            </ScrollView>
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="2*" />
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-                <Button Text="Standard programmer" Clicked="StndardProgramButton_Clicked"></Button>
-                <Button Grid.Column="1" Text="Nyt program" Clicked="NewProgramButton_Clicked"></Button>
-            </Grid>
-        </StackLayout>
-    </ContentPage.Content>
+             xmlns:forms="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
+             xmlns:models="clr-namespace:MobileDev_Projekt.Models;assembly=MobileDev Projekt"
+             NavigationPage.HasNavigationBar="false"
+             x:Class="MobileDev_Projekt.Pages.HomePage"
+             BackgroundColor="{StaticResource AccentColor}"
+             x:DataType="models:HomePageModel">
+  <ContentPage.Content>
+    <Grid>
+      <Grid.RowDefinitions>
+        <RowDefinition Height="Auto" />
+        <RowDefinition Height="Auto" />
+        <RowDefinition Height="*" />
+        <RowDefinition Height="Auto" />
+      </Grid.RowDefinitions>
+      <forms:SvgCachedImage Grid.Row="0"
+                            WidthRequest="75"
+                            HeightRequest="75"
+                            Source="resource://MobileDev_Projekt.Resources.PsysioCamLogo.svg" />
+      <Label Grid.Row="1"
+             Text="Velkommen"
+             FontFamily="TitleFont"
+             FontSize="Title"
+             HorizontalOptions="Center"
+             Margin="0,15,0,0"/>
+      <ScrollView Grid.Row="2"
+                  Margin="0,50,0,0">
+        <ListView ItemsSource="{Binding Exercises}"
+                  HeightRequest="1">
+            <ListView.ItemTemplate>
+              <DataTemplate>
+                <ViewCell>
+                  <Label Text="{Binding .}"
+                         TextColor="{StaticResource MainColor}"
+                         HorizontalOptions="Center"
+                         VerticalOptions="Center"
+                         FontFamily="TextFont" />
+                </ViewCell>
+              </DataTemplate>
+            </ListView.ItemTemplate>
+          </ListView>
+      </ScrollView>
+      <Grid Grid.Row="3"
+            Margin="5,0,5,35">
+        <Grid.RowDefinitions>
+          <RowDefinition Height="2*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="*" />
+          <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Button Grid.Column="0" 
+                Text="Standard programmer" 
+                Clicked="StndardProgramButton_Clicked"/>
+        <Button Grid.Column="1" 
+                Text="Nyt program" 
+                Clicked="NewProgramButton_Clicked" />
+      </Grid>
+    </Grid>
+  </ContentPage.Content>
 </ContentPage>

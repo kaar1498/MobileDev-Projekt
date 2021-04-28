@@ -1,5 +1,6 @@
 ﻿using System;
 using MobileDev_Projekt.Models;
+using MobileDev_Projekt.Services;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -17,12 +18,9 @@ namespace MobileDev_Projekt.Pages
     
     private void ExerciseButton_OnClicked(object sender, EventArgs e)
     {
-      var exerciseModel = new ExerciseModel()
-      {
-        Image = "https://picsum.photos/50"
-      };
+      var exerciseModel = new ExerciseModel();
       Model.ExerciseModels.Add(exerciseModel);
-      Navigation.PushAsync(new NewExercisePage(exerciseModel));
+      Navigation.PushAsync(new NewExercisePage(exerciseModel, Model));
     }
 
     private void UndoButton_OnClicked(object sender, EventArgs e)
@@ -32,21 +30,28 @@ namespace MobileDev_Projekt.Pages
 
     private void ActionButton_OnClicked(object sender, EventArgs e)
     {
-      Navigation.PushAsync(new MainPage());
+      if (string.IsNullOrWhiteSpace(Model.InformationModel.Value))
+      {
+        DependencyService.Get<IMessage>().LongAlert("Tiitel skal udfyldes");
+        return;
+      }
+      Navigation.PushAsync(new PublishProgramPage());
     }
 
     private void EditSwipeItem_OnInvoked(object sender, EventArgs e)
     {
       var item = sender as SwipeItem;
-      var model = item.BindingContext as ExerciseModel;
-      Navigation.PushAsync(new NewExercisePage(model));
+      var exerciseModel = item.BindingContext as ExerciseModel;
+      Model.ExerciseModels.Remove(exerciseModel);
+      Navigation.PushAsync(new NewExercisePage(exerciseModel));
+      Model.ExerciseModels.Add(exerciseModel);
     }
 
     private void DeleteSwipeItem_OnInvoked(object sender, EventArgs e)
     {
       var item = sender as SwipeItem;
-      var model = item.BindingContext as ExerciseModel;
-      Model.ExerciseModels.Remove(model);
+      var exerciseModel = item.BindingContext as ExerciseModel;
+      Model.ExerciseModels.Remove(exerciseModel);
     }
   }
 }

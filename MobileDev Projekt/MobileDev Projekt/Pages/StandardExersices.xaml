@@ -1,0 +1,106 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MobileDev_Projekt.Pages.StandardExersices">
+    <ContentPage.Content>
+        <StackLayout Padding="20">
+            <Label 
+                FontSize="Large" 
+                Text="Standard Øvelser"
+                HorizontalOptions="Center" />
+
+            <ScrollView HeightRequest="3000">
+                <Grid Margin="20">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+
+                    <Frame BorderColor="Black" Padding="15" >
+                        <StackLayout Orientation="Vertical" Spacing="15" >
+                            <BoxView Color="Green" WidthRequest="125" HeightRequest="125" />
+                            <StackLayout Orientation="Vertical">
+                                <Label Text="Øvelse: Lounge" FontSize="Medium" XAlign="Center"/>
+                                <Label Text="Antal Gentagelser: 10" FontSize="Small" XAlign="Center"/>
+                                <Label Text="Antal Sæt: 3" FontSize="Small" XAlign="Center"/>
+                            </StackLayout>
+                        </StackLayout>
+                    </Frame>
+
+
+                    <Frame BorderColor="Black" Padding="15" Grid.Column="1">
+                        <StackLayout Orientation="Vertical" Spacing="15" >
+                            <BoxView Color="Yellow" WidthRequest="125" HeightRequest="125" />
+                            <StackLayout Orientation="Vertical">
+                                <Label Text="Øvelse: Lounge" FontSize="Medium" XAlign="Center"/>
+                                <Label Text="Antal Gentagelser: 10" FontSize="Small" XAlign="Center"/>
+                                <Label Text="Antal Sæt: 3" FontSize="Small" XAlign="Center"/>
+                            </StackLayout>
+                        </StackLayout>
+                    </Frame>
+
+                    <Frame BorderColor="Black" Padding="15" Grid.Row="1" >
+                        <StackLayout Orientation="Vertical" Spacing="15" >
+                            <BoxView Color="Red" WidthRequest="125" HeightRequest="125" />
+                            <StackLayout Orientation="Vertical">
+                                <Label Text="Øvelse: Lounge" FontSize="Medium" XAlign="Center"/>
+                                <Label Text="Antal Gentagelser: 10" FontSize="Small" XAlign="Center"/>
+                                <Label Text="Antal Sæt: 3" FontSize="Small" XAlign="Center"/>
+                            </StackLayout>
+                        </StackLayout>
+                    </Frame>
+
+
+                    <Frame BorderColor="Black" Padding="15" Grid.Row="1" Grid.Column="1">
+                        <StackLayout Orientation="Vertical" Spacing="15" >
+                            <BoxView Color="Gray" WidthRequest="125" HeightRequest="125" />
+                            <StackLayout Orientation="Vertical">
+                                <Label Text="Øvelse: Lounge" FontSize="Medium" XAlign="Center"/>
+                                <Label Text="Antal Gentagelser: 10" FontSize="Small" XAlign="Center"/>
+                                <Label Text="Antal Sæt: 3" FontSize="Small" XAlign="Center"/>
+                            </StackLayout>
+                        </StackLayout>
+                    </Frame>
+
+                    <Frame BorderColor="Black" Padding="15" Grid.Row="2">
+                        <StackLayout Orientation="Vertical" Spacing="15" >
+                            <BoxView Color="Orange" WidthRequest="125" HeightRequest="125" />
+                            <StackLayout Orientation="Vertical">
+                                <Label Text="Øvelse: Lounge" FontSize="Medium" XAlign="Center"/>
+                                <Label Text="Antal Gentagelser: 10" FontSize="Small" XAlign="Center"/>
+                                <Label Text="Antal Sæt: 3" FontSize="Small" XAlign="Center"/>
+                            </StackLayout>
+                        </StackLayout>
+                    </Frame>
+
+                    <Frame BorderColor="Black" Padding="15" Grid.Row="2" Grid.Column="1">
+                        <StackLayout Orientation="Vertical" Spacing="15" >
+                            <BoxView Color="Blue" WidthRequest="125" HeightRequest="125" />
+                            <StackLayout Orientation="Vertical">
+                                <Label Text="Øvelse: Lounge" FontSize="Medium" XAlign="Center"/>
+                                <Label Text="Antal Gentagelser: 10" FontSize="Small" XAlign="Center"/>
+                                <Label Text="Antal Sæt: 3" FontSize="Small" XAlign="Center"/>
+                            </StackLayout>
+                        </StackLayout>
+                    </Frame>
+
+
+                </Grid>
+            </ScrollView>
+
+            <StackLayout Orientation="Vertical">
+                <Button Text="Ny Øvelse"
+                VerticalOptions="CenterAndExpand"
+                HorizontalOptions="Center"
+                />
+
+            </StackLayout>
+
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

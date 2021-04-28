@@ -1,16 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Xamarin.Forms;
 
-namespace MobileDev_Projekt
+using Xamarin.Forms;
+using Xamarin.Forms.Xaml;
+
+namespace MobileDev_Projekt.Pages
 {
-    public partial class MainPage : ContentPage
+    [XamlCompilation(XamlCompilationOptions.Compile)]
+    public partial class StandardExersices : ContentPage
     {
-        public MainPage()
+        public StandardExersices()
         {
             InitializeComponent();
         }

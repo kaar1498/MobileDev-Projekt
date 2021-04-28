@@ -5,22 +5,36 @@
              xmlns:models="clr-namespace:MobileDev_Projekt.Models;assembly=MobileDev Projekt"
              x:Class="MobileDev_Projekt.Pages.NewProgramPage"
              Title="Nyt program"
-             x:DataType="models:NewProgramPageModel">
+             NavigationPage.HasNavigationBar="false"
+             x:DataType="models:NewProgramPageModel"
+             BackgroundColor="{StaticResource AccentColor}">
 
-  <StackLayout Margin="5,0,5,0">
+  <StackLayout Margin="15,0,15,0">
 
-    <Grid Margin="0,0,0,10">
+    <Label Text="Nyt program"
+           FontFamily="TitleFont"
+           FontSize="Title"
+           HorizontalOptions="Center"
+           Margin="0,15,0,0"/>
+    
+    <Grid Margin="0,10,0,10">
       <Grid>
+        <Grid.RowDefinitions>
+          <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
           <ColumnDefinition />
           <ColumnDefinition />
         </Grid.ColumnDefinitions>
         <Label Grid.Column="0"
                VerticalOptions="Center"
-               Text="{Binding InformationModel.Name}" />
+               FontFamily="TextFont"
+               FontSize="Body"
+               Text="{Binding InformationModel.Title}" />
         <Editor Grid.Column="1"
                 FontSize="Small"
-                HeightRequest="50"
+                FontFamily="TextLightFont"
+                HeightRequest="40"
                 Text="{Binding InformationModel.Value}" />
       </Grid>
     </Grid>
@@ -41,13 +55,13 @@
                              Invoked="DeleteSwipeItem_OnInvoked" />
                 </SwipeItems>
               </SwipeView.LeftItems>
-              <Grid>
+              <Grid BackgroundColor="{StaticResource AccentColor}">
                 <Grid.ColumnDefinitions>
                   <ColumnDefinition Width="Auto" />
                   <ColumnDefinition />
                 </Grid.ColumnDefinitions>
                 <Image Grid.Column="0"
-                       Source="{Binding Image}"
+                       Source="{Binding ImageModels}"
                        WidthRequest="50"
                        HeightRequest="50"/>
                 <Label Grid.Column="1"
@@ -60,9 +74,7 @@
         </DataTemplate>
       </ListView.ItemTemplate>
     </ListView>
-
-
-
+    
     <Grid Margin="0,0,0,10">
       <Grid.RowDefinitions>
         <RowDefinition />

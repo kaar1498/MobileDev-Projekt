@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-
+using FFImageLoading.Forms.Platform;
+using FFImageLoading.Svg.Forms;
 using Foundation;
+using Sharpnado.HorizontalListView.iOS;
 using UIKit;
 
 namespace MobileDev_Projekt.iOS
@@ -22,7 +24,11 @@ namespace MobileDev_Projekt.iOS
         //
         public override bool FinishedLaunching(UIApplication app, NSDictionary options)
         {
+            SharpnadoInitializer.Initialize();
+            
             global::Xamarin.Forms.Forms.Init();
+            CachedImageRenderer.Init();
+            var ignore = typeof(SvgCachedImage);
             LoadApplication(new App());
 
             return base.FinishedLaunching(app, options);

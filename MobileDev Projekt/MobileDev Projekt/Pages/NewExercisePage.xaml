@@ -3,12 +3,44 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:models="clr-namespace:MobileDev_Projekt.Models;assembly=MobileDev Projekt"
+             xmlns:renderedViews="http://sharpnado.com"
+             xmlns:forms="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
              Title="Ny Øvelse"
-             x:Class="MobileDev_Projekt.Pages.NewExercisePage" x:DataType="models:ExerciseModel">
+             x:Class="MobileDev_Projekt.Pages.NewExercisePage"
+             NavigationPage.HasNavigationBar="false"
+             x:DataType="models:ExerciseModel"
+             BackgroundColor="{StaticResource AccentColor}">
   <ContentPage.Content>
     <StackLayout Margin="5,0,5,0">
-      
-      <Grid Margin="0,0,0,10">
+
+      <Label Text="Ny øvelse"
+             FontFamily="TitleFont"
+             FontSize="Title"
+             HorizontalOptions="Center"
+             Margin="0,15,0,0" />
+
+      <Button Text="Tilføj Billeder" Clicked="AddPictureButton_Clicked" />
+
+      <renderedViews:HorizontalListView ItemsSource="{Binding ImageModels}"
+                                        ItemHeight="120"
+                                        ItemWidth="120"
+                                        CollectionPadding="10,30,10,75"
+                                        ListLayout="Linear"
+                                        SnapStyle="Center"
+                                        EnableDragAndDrop="True">
+        <renderedViews:HorizontalListView.ItemTemplate>
+          <DataTemplate x:DataType="models:ImageModel">
+            <renderedViews:DraggableViewCell x:Name="DraggableViewCell">
+              <ContentView>
+                <Image Source="{Binding Image}"
+                       HeightRequest="120"/>
+              </ContentView>
+            </renderedViews:DraggableViewCell>
+          </DataTemplate>
+        </renderedViews:HorizontalListView.ItemTemplate>
+      </renderedViews:HorizontalListView>
+
+      <StackLayout Margin="0,0,0,10">
         <Grid>
           <Grid.ColumnDefinitions>
             <ColumnDefinition />
@@ -16,26 +48,82 @@
           </Grid.ColumnDefinitions>
           <Label Grid.Column="0"
                  VerticalOptions="Center"
-                 Text="Navn" />
+                 Text="Titel" />
           <Editor Grid.Column="1"
                   FontSize="Small"
                   HeightRequest="50"
-                  Text="{Binding .Name}"/>
+                  Text="{Binding Name}" />
         </Grid>
-      </Grid>
-      
+        <Grid>
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition />
+          </Grid.ColumnDefinitions>
+          <Label Grid.Column="0"
+                 VerticalOptions="Center"
+                 Text="Gentagelser" />
+          <Editor Grid.Column="1"
+                  FontSize="Small"
+                  HeightRequest="50"
+                  Keyboard="Numeric"
+                  Text="{Binding Repetitions}" />
+        </Grid>
+        <Grid>
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition />
+          </Grid.ColumnDefinitions>
+          <Label Grid.Column="0"
+                 VerticalOptions="Center"
+                 Text="Varighed" />
+          <Editor Grid.Column="1"
+                  FontSize="Small"
+                  HeightRequest="50"
+                  Keyboard="Numeric"
+                  Text="{Binding Duration}" />
+        </Grid>
+        <Grid>
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition />
+          </Grid.ColumnDefinitions>
+          <Label Grid.Column="0"
+                 VerticalOptions="Center"
+                 Text="Pause interval" />
+          <Editor Grid.Column="1"
+                  FontSize="Small"
+                  HeightRequest="50"
+                  Keyboard="Numeric"
+                  Text="{Binding RestFrequency}" />
+        </Grid>
+        <Grid>
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition />
+          </Grid.ColumnDefinitions>
+          <Label Grid.Column="0"
+                 VerticalOptions="Center"
+                 Text="Pause varighed" />
+          <Editor Grid.Column="1"
+                  FontSize="Small"
+                  HeightRequest="50"
+                  Keyboard="Numeric"
+                  Text="{Binding RestDuration}" />
+        </Grid>
+      </StackLayout>
+
       <Grid Margin="0,0,0,10">
         <Grid.ColumnDefinitions>
           <ColumnDefinition />
           <ColumnDefinition />
         </Grid.ColumnDefinitions>
-        
+
         <Button Grid.Column="0" x:Name="UndoButton"
-                               Text="Fortryd"
-                               Clicked="UndoButton_OnClicked"></Button>
+                Text="Fortryd"
+                Clicked="UndoButton_OnClicked" />
         <Button Grid.Column="1" x:Name="CreateButton"
                 Text="Opret"
-                Clicked="CreateButton_OnClicked"></Button>
+                Clicked="CreateButton_OnClicked" />
       </Grid>
     </StackLayout>
   </ContentPage.Content>

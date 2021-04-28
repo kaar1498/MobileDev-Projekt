@@ -2,19 +2,33 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MobileDev_Projekt.Pages.RegisterPage"
-             Title="Register">
+             Title="Opret">
     <ContentPage.Content>
         <StackLayout>
             <Label
                 FontSize="Large"
-                Text="Create Account"
+                Text="Opret Konto"
                 VerticalOptions="Start" 
                 HorizontalOptions="CenterAndExpand" />
             <StackLayout VerticalOptions="CenterAndExpand" HorizontalOptions="Center" WidthRequest="320" Spacing="20" Padding="10">
-                <Entry Placeholder="John Doe"></Entry>
-                <Entry Placeholder="John@email.com"></Entry>
-                <Entry Placeholder="Password" IsPassword="True"></Entry>
-                <Button Padding="30" Text="Create Account" Clicked="CreateButton_Clicked"></Button>
+                <Entry x:Name="NameEntry" Placeholder="John Doe"/>
+                <Entry x:Name="EmailEntry" Placeholder="John@email.com"/>
+                <Entry x:Name="PasswordEntry" Placeholder="Password" IsPassword="True"/>
+                <Entry x:Name="PasswordRepeatEntry" Placeholder="Gentag Password" IsPassword="True"/>
+                <Entry x:Name="Address" Placeholder="Addresse"/>
+                <Entry x:Name="PhoneNumberEntry" Placeholder="Telefon"/>
+                <Entry x:Name="UserName" Placeholder="Brugernavn"/>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="2*" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Button Grid.Column="0" Text="Fortryd" Clicked="UndoButton_Clicked"/>
+                    <Button Grid.Column="1" x:Name="CreateUser" Text="Opret Konto" Clicked="CreateButton_Clicked"/>
+                </Grid>
             </StackLayout>
         </StackLayout>
     </ContentPage.Content>

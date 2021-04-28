@@ -1,27 +1,62 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8"?>
+
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:magic="clr-namespace:MagicGradients;assembly=MagicGradients"
+             xmlns:mobileDevProjekt="clr-namespace:MobileDev_Projekt;assembly=MobileDev Projekt"
+             xmlns:forms="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
              Title="Login"
+             NavigationPage.HasNavigationBar="false"
              x:Class="MobileDev_Projekt.Pages.LoginPage">
-    <ContentPage.Content>
-        <StackLayout Spacing="30" Padding="50">
-            <!--<Image Source="{local:ImageResource MobileDev_Projekt.Embedded.logo.png}" />-->
-            <Label 
-                FontSize="Large" 
-                Text="PhysioCam"
-                HorizontalOptions="Center" />
-            <StackLayout VerticalOptions="CenterAndExpand" HorizontalOptions="Center" WidthRequest="320">
-                <Entry
-                    FontSize="Large"
-                    Placeholder="Brugernavn"/>
-                    <Entry
-                    FontSize="Large"
-                    Placeholder="Password"/>
-            </StackLayout>
-            <StackLayout Spacing="10">
-                <Button WidthRequest="320" HeightRequest="70" VerticalOptions="End" HorizontalOptions="Center" Text="Login" Clicked="LoginButton_Clicked"/>
-                <Button WidthRequest="320" HeightRequest="70" VerticalOptions="End" HorizontalOptions="Center" Text="Opret" Clicked="RegisterButton_Clicked"/>
-            </StackLayout>
+  <ContentPage.Resources>
+    <StyleSheet Source="../Styles/LinearGradientsPage.css" />
+  </ContentPage.Resources>
+  <ContentPage.Content>
+    <Grid>
+      <magic:GradientView VerticalOptions="FillAndExpand" StyleClass="gradientStyledWithCss" />
+      <StackLayout Spacing="30" Padding="50">
+        <forms:SvgCachedImage WidthRequest="100" 
+                              HeightRequest="100"
+                              Source="resource://MobileDev_Projekt.Resources.PsysioCamLogo.svg" />
+        <Label FontSize="Title"
+               FontFamily="TitleFont"
+               TextColor="{StaticResource MainColor}"
+               Text="PhysioCam"
+               HorizontalOptions="Center" />
+        <StackLayout VerticalOptions="CenterAndExpand" HorizontalOptions="Center" WidthRequest="320">
+          <Entry x:Name="UsernameEntry" 
+                 FontSize="Large"
+                 FontFamily="TextFont"
+                 TextColor="{StaticResource MainColor}"
+                 Placeholder="Brugernavn" />
+          <Entry x:Name="PasswordEntry" 
+                 FontSize="Large"
+                 FontFamily="TextFont"
+                 IsPassword="True"
+                 TextColor="{StaticResource MainColor}"
+                 Placeholder="Kode" />
         </StackLayout>
-    </ContentPage.Content>
+        <StackLayout Spacing="10">
+          <Button WidthRequest="320"
+                  HeightRequest="70"
+                  VerticalOptions="End"
+                  HorizontalOptions="Center"
+                  Text="Login"
+                  Clicked="LoginButton_Clicked"
+                  BackgroundColor="{StaticResource MainColor}"
+                  BorderColor="Transparent" />
+          <Button WidthRequest="320"
+                  HeightRequest="70"
+                  VerticalOptions="End"
+                  HorizontalOptions="Center"
+                  BackgroundColor="Transparent"
+                  BorderColor="{StaticResource MainColor}"
+                  TextColor="{StaticResource MainColor}"
+                  BorderWidth="2"
+                  Text="Opret"
+                  Clicked="RegisterButton_Clicked" />
+        </StackLayout>
+      </StackLayout>
+    </Grid>
+  </ContentPage.Content>
 </ContentPage>
