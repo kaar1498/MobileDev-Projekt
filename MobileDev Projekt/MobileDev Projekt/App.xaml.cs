@@ -13,8 +13,8 @@ namespace MobileDev_Projekt
             InitializeComponent();
 
             Sharpnado.HorizontalListView.Initializer.Initialize(true, false);
-            
-            MainPage = new NavigationPage(new NewProgramPage());
+
+            MainPage = new NavigationPage(new LoginPage());
             MainPage.SetValue(NavigationPage.BarBackgroundColorProperty, Color.Black);
             MainPage.SetValue(NavigationPage.BarTextColorProperty, Color.White);
         }
