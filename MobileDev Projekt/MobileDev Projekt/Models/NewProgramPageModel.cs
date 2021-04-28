@@ -92,6 +92,54 @@ namespace MobileDev_Projekt.Models
   {
     private string _name;
     private string _image;
+    private int _duration = 1;
+    private int _restFrequency = 1;
+    private int _restDuration = 1;
+    private int _repetitions = 1;
+
+    public int Duration
+    {
+      get => _duration;
+      set
+      {
+        if (value == _duration) return;
+        _duration = value;
+        OnPropertyChanged();
+      }
+    }
+
+    public int Repetitions
+    {
+      get => _repetitions;
+      set
+      {
+        if (value == _repetitions) return;
+        _repetitions = value;
+        OnPropertyChanged();
+      }
+    }
+
+    public int RestFrequency
+    {
+      get => _restFrequency;
+      set
+      {
+        if (value == _restFrequency) return;
+        _restFrequency = value;
+        OnPropertyChanged();
+      }
+    }
+
+    public int RestDuration
+    {
+      get => _restDuration;
+      set
+      {
+        if (value == _restDuration) return;
+        _restDuration = value;
+        OnPropertyChanged();
+      }
+    }
 
     public string Name
     {
