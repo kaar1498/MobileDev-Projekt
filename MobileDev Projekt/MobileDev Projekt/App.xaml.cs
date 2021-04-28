@@ -12,7 +12,7 @@ namespace MobileDev_Projekt
         {
             InitializeComponent();
 
-            MainPage = new NavigationPage(new NewProgramPage());
+            MainPage = new NavigationPage(new LoginPage());
             MainPage.SetValue(NavigationPage.BarBackgroundColorProperty, Color.Black);
             MainPage.SetValue(NavigationPage.BarTextColorProperty, Color.White);
         }
