@@ -10,14 +10,11 @@
              BackgroundColor="{StaticResource AccentColor}">
   <ContentPage.Content>
     <StackLayout Margin="5,0,5,0">
-
-      <Label Text="Ny øvelse"
-             FontFamily="TitleFont"
-             FontSize="Title"
-             HorizontalOptions="Center"
-             Margin="0,15,0,0" />
-
-      <StackLayout Margin="0,0,0,10">
+      
+      <Button Text="Tilføj Billeder" Clicked="AddPictureButton_Clicked" />
+      <Image x:Name="PhotoImage"/>
+      
+      <Grid Margin="0,0,0,10">
         <Grid>
           <Grid.ColumnDefinitions>
             <ColumnDefinition />
@@ -25,85 +22,26 @@
           </Grid.ColumnDefinitions>
           <Label Grid.Column="0"
                  VerticalOptions="Center"
-                 Text="Titel" />
+                 Text="Navn" />
           <Editor Grid.Column="1"
                   FontSize="Small"
                   HeightRequest="50"
-                  Text="{Binding Name}"/>
+                  Text="{Binding .Name}"/>
         </Grid>
-        <Grid>
-          <Grid.ColumnDefinitions>
-            <ColumnDefinition />
-            <ColumnDefinition />
-          </Grid.ColumnDefinitions>
-          <Label Grid.Column="0"
-                 VerticalOptions="Center"
-                 Text="Gentagelser" />
-          <Editor Grid.Column="1"
-                  FontSize="Small"
-                  HeightRequest="50"
-                  Keyboard="Numeric"
-                  Text="{Binding Repetitions}"/>
-        </Grid>
-        <Grid>
-          <Grid.ColumnDefinitions>
-            <ColumnDefinition />
-            <ColumnDefinition />
-          </Grid.ColumnDefinitions>
-          <Label Grid.Column="0"
-                 VerticalOptions="Center"
-                 Text="Varighed" />
-          <Editor Grid.Column="1"
-                  FontSize="Small"
-                  HeightRequest="50"
-                  Keyboard="Numeric"
-                  />
-                  <!-- Text="{Binding Duration, StringFormat='{0}s'}" -->
-        </Grid>
-        <Grid>
-          <Grid.ColumnDefinitions>
-            <ColumnDefinition />
-            <ColumnDefinition />
-          </Grid.ColumnDefinitions>
-          <Label Grid.Column="0"
-                 VerticalOptions="Center"
-                 Text="Pause interval" />
-          <Editor Grid.Column="1"
-                  FontSize="Small"
-                  HeightRequest="50"
-                  Keyboard="Numeric"
-                  />
-                  <!-- Text="{Binding RestFrequency, StringFormat='Hver {0} øvelser'}" -->
-        </Grid>
-        <Grid>
-          <Grid.ColumnDefinitions>
-            <ColumnDefinition />
-            <ColumnDefinition />
-          </Grid.ColumnDefinitions>
-          <Label Grid.Column="0"
-                 VerticalOptions="Center"
-                 Text="Pause varighed" />
-          <Editor Grid.Column="1"
-                  FontSize="Small"
-                  HeightRequest="50"
-                  Keyboard="Numeric"
-                  />
-                  <!-- Text="{Binding RestDuration, StringFormat='{0}s'}" -->
-        </Grid>
-      </StackLayout>
-
+      </Grid>
+      
       <Grid Margin="0,0,0,10">
         <Grid.ColumnDefinitions>
           <ColumnDefinition />
           <ColumnDefinition />
         </Grid.ColumnDefinitions>
-
+        
         <Button Grid.Column="0" x:Name="UndoButton"
-                Text="Fortryd"
-                Clicked="UndoButton_OnClicked" />
+                               Text="Fortryd"
+                               Clicked="UndoButton_OnClicked"></Button>
         <Button Grid.Column="1" x:Name="CreateButton"
                 Text="Opret"
-                Clicked="CreateButton_OnClicked" />
+                Clicked="CreateButton_OnClicked"></Button>
       </Grid>
     </StackLayout>
   </ContentPage.Content>
