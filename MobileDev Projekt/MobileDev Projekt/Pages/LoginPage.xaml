@@ -18,7 +18,8 @@
         <forms:SvgCachedImage WidthRequest="100" 
                               HeightRequest="100"
                               Source="resource://MobileDev_Projekt.Resources.PsysioCamLogo.svg" />
-        <Label FontSize="Title"
+        <Label x:Name="TitleLabel"
+               FontSize="Title"
                FontFamily="TitleFont"
                TextColor="{StaticResource MainColor}"
                Text="PhysioCam"

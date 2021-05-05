@@ -16,7 +16,7 @@ namespace MobileDev_Projekt.Pages
             InitializeComponent();
             _model = new HomePageModel();
             BindingContext = _model;
-            var apiService = new ApiService();
+            var apiService = new RestClient();
             Task.Run(async () =>
             {
                 _model.ProgramModels = await apiService.GetPrograms();

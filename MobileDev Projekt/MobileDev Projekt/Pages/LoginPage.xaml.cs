@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using MobileDev_Projekt.Services;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -12,11 +8,11 @@ namespace MobileDev_Projekt.Pages
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class LoginPage : ContentPage
     {
-        private readonly ApiService _apiService;
+        private readonly RestClient _restClient;
         public LoginPage()
         {
             InitializeComponent();
-            _apiService = new ApiService();
+            _restClient = new RestClient();
         }
 
         private void RegisterButton_Clicked(object sender, EventArgs e)
@@ -30,7 +26,7 @@ namespace MobileDev_Projekt.Pages
             var password = PasswordEntry.Text;
             
             var isValid = !string.IsNullOrWhiteSpace(username) && !string.IsNullOrWhiteSpace(password);
-            isValid = await _apiService.Login() && isValid; //TODO Validate with API
+            isValid = await _restClient.Login() && isValid; //TODO Validate with API
             
             if (!isValid)
             {
