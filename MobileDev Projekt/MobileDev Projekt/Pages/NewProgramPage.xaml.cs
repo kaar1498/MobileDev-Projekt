@@ -19,11 +19,11 @@ namespace MobileDev_Projekt.Pages
       BindingContext = _model;
     }
     
-    private void ExerciseButton_OnClicked(object sender, EventArgs e)
+    private async void ExerciseButton_OnClicked(object sender, EventArgs e)
     {
       var exerciseModel = new ExerciseModel();
       _model.ExerciseModels.Add(exerciseModel);
-      Navigation.PushAsync(new NewExercisePage(exerciseModel, _model));
+      await Navigation.PushAsync(new NewExercisePage(exerciseModel, _model));
     }
 
     private void UndoButton_OnClicked(object sender, EventArgs e)

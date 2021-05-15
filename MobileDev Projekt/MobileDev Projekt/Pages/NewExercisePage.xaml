@@ -4,7 +4,6 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:models="clr-namespace:MobileDev_Projekt.Models;assembly=MobileDev Projekt"
              xmlns:renderedViews="http://sharpnado.com"
-             xmlns:forms="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
              Title="Ny Øvelse"
              x:Class="MobileDev_Projekt.Pages.NewExercisePage"
              NavigationPage.HasNavigationBar="false"
@@ -22,18 +21,23 @@
       <Button Text="Tilføj Billeder" Clicked="AddPictureButton_Clicked" />
 
       <renderedViews:HorizontalListView ItemsSource="{Binding ImageModels}"
-                                        ItemHeight="120"
-                                        ItemWidth="120"
-                                        CollectionPadding="10,30,10,75"
+                                        ItemHeight="200"
+                                        ItemWidth="200"
                                         ListLayout="Linear"
                                         SnapStyle="Center"
-                                        EnableDragAndDrop="True">
+                                        CollectionPadding="10,10,10,10"
+                                        HeightRequest="220">
         <renderedViews:HorizontalListView.ItemTemplate>
           <DataTemplate x:DataType="models:ImageModel">
             <renderedViews:DraggableViewCell x:Name="DraggableViewCell">
               <ContentView>
+                <StackLayout>
                 <Image Source="{Binding Image}"
-                       HeightRequest="120"/>
+                       HeightRequest="150"/>
+                  <Editor Text="{Binding Description}"
+                          HeightRequest="50"
+                          FontSize="Small"/>
+                </StackLayout>
               </ContentView>
             </renderedViews:DraggableViewCell>
           </DataTemplate>

@@ -17,7 +17,7 @@ namespace MobileDev_Projekt.Services
         return new ObservableCollection<ProgramModel>();
       }
 
-      await Task.Delay(3000);
+      await Task.Delay(500);
       return new ObservableCollection<ProgramModel>
       {
         new()
@@ -92,7 +92,7 @@ namespace MobileDev_Projekt.Services
         return false;
       }
 
-      await Task.Delay(1000);
+      await Task.Delay(500);
       return true;
     }
 

@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
+using System.IO;
+using FFImageLoading;
 using MobileDev_Projekt.Models;
 using MobileDev_Projekt.Services;
 using Xamarin.Essentials;
@@ -51,10 +53,11 @@ namespace MobileDev_Projekt.Pages
         {
             var photo = await MediaPicker.CapturePhotoAsync(new MediaPickerOptions { Title = "Tag et billede" });
             if (photo == null) return;
-            var stream = await photo.OpenReadAsync();
+            
+            using var stream = await photo.OpenReadAsync();
             _model.ImageModels.Add(new ImageModel
             {
-                Image = ImageSource.FromStream(() => stream)
+                Bytes = stream.ToByteArray()
             });
         }
 
@@ -62,10 +65,11 @@ namespace MobileDev_Projekt.Pages
         {
             var photo = await MediaPicker.PickPhotoAsync(new MediaPickerOptions { Title = "Vælg et billede" });
             if (photo == null) return;
-            var stream = await photo.OpenReadAsync();
+            
+            using var stream = await photo.OpenReadAsync();
             _model.ImageModels.Add(new ImageModel
             {
-                Image = ImageSource.FromStream(() => stream)
+                Bytes = stream.ToByteArray()
             });
         }
 

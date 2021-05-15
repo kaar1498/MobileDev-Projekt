@@ -74,7 +74,6 @@ namespace MobileDev_Projekt.Models
       get => _imageModels;
       set
       {
-        if (value == _imageModels) return;
         _imageModels = value;
         OnPropertyChanged();
       }

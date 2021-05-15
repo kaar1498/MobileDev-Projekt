@@ -3,11 +3,17 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:models="clr-namespace:MobileDev_Projekt.Models;assembly=MobileDev Projekt"
+             xmlns:converters="clr-namespace:MobileDev_Projekt.Converters;assembly=MobileDev Projekt"
              x:Class="MobileDev_Projekt.Pages.NewProgramPage"
              Title="Nyt program"
              NavigationPage.HasNavigationBar="false"
              x:DataType="models:ProgramModel"
              BackgroundColor="{StaticResource AccentColor}">
+  <ContentPage.Resources>
+    <ResourceDictionary>
+      <converters:ImageConverter x:Key="ImageConverter"/>
+    </ResourceDictionary>
+  </ContentPage.Resources>
 
   <StackLayout Margin="15,0,15,0">
 
@@ -61,7 +67,7 @@
                   <ColumnDefinition />
                 </Grid.ColumnDefinitions>
                 <Image Grid.Column="0"
-                       Source="{Binding ImageModels}"
+                       Source="{Binding ImageModels, Converter={StaticResource ImageConverter}}"
                        WidthRequest="50"
                        HeightRequest="50"/>
                 <Label Grid.Column="1"

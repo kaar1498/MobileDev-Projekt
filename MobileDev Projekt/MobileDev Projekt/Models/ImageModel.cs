@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using System.IO;
 using System.Runtime.CompilerServices;
 using MobileDev_Projekt.Annotations;
 using Xamarin.Forms;
@@ -7,17 +8,18 @@ namespace MobileDev_Projekt.Models
 {
   public class ImageModel : INotifyPropertyChanged
   {
-    private ImageSource _image;
+    private byte[] _bytes;
     private string _description;
 
-    public ImageSource Image
+    public ImageSource Image => ImageSource.FromStream(() => new MemoryStream(_bytes));
+
+    public byte[] Bytes
     {
-      get => _image;
       set
       {
-        if (Equals(value, _image)) return;
-        _image = value;
-        OnPropertyChanged();
+        if (Equals(value, _bytes)) return;
+        _bytes = value;
+        OnPropertyChanged(nameof(Image));
       }
     }
 

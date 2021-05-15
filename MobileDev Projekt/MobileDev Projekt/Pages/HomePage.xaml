@@ -2,7 +2,6 @@
 
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:local="clr-namespace:MobileDev_Projekt"
              xmlns:forms="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
              xmlns:models="clr-namespace:MobileDev_Projekt.Models;assembly=MobileDev Projekt"
              xmlns:renderedViews="http://sharpnado.com"
@@ -33,8 +32,7 @@
                                         ItemsSource="{Binding ProgramModels}"
                                         ItemHeight="50"
                                         CollectionPadding="0,0,0,0"
-                                        ListLayout="Vertical"
-                                        EnableDragAndDrop="True">
+                                        ListLayout="Vertical">
         <renderedViews:HorizontalListView.ItemTemplate>
           <DataTemplate x:DataType="models:ProgramModel">
             <renderedViews:DraggableViewCell x:Name="DraggableViewCell">
@@ -52,23 +50,7 @@
           </DataTemplate>
         </renderedViews:HorizontalListView.ItemTemplate>
       </renderedViews:HorizontalListView>
-      <!-- <ScrollView Grid.Row="2" -->
-      <!--             Margin="0,50,0,0"> -->
-      <!--   <ListView ItemsSource="{Binding ProgramModels}" -->
-      <!--             HeightRequest="1"> -->
-      <!--       <ListView.ItemTemplate> -->
-      <!--         <DataTemplate> -->
-      <!--           <ViewCell> -->
-      <!--             <Label Text="{Binding .}" -->
-      <!--                    TextColor="{StaticResource MainColor}" -->
-      <!--                    HorizontalOptions="Center" -->
-      <!--                    VerticalOptions="Center" -->
-      <!--                    FontFamily="TextFont" /> -->
-      <!--           </ViewCell> -->
-      <!--         </DataTemplate> -->
-      <!--       </ListView.ItemTemplate> -->
-      <!--     </ListView> -->
-      <!-- </ScrollView> -->
+      
       <Grid Grid.Row="3"
             Margin="5,0,5,35">
         <Grid.RowDefinitions>
