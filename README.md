@@ -2,5 +2,4 @@
 
 Mangler:
 - Style PublishProgramPage
-- NewExersicePage image description
-- Rediger exersice med billeder fejler
+- NewExersicePage delete image button
