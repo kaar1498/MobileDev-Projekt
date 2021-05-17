@@ -7,15 +7,27 @@ namespace MobileDev_Projekt.Models
 {
   public class HomePageModel : INotifyPropertyChanged
   {
-    private ObservableCollection<ProgramModel> _programModels;
+    private ObservableCollection<ProgramModel> _standardProgramModels;
+    private ObservableCollection<ExerciseModel> _standardExerciseModels = new();
 
-    public ObservableCollection<ProgramModel> ProgramModels
+    public ObservableCollection<ProgramModel> StandardProgramModels
     {
-      get => _programModels;
+      get => _standardProgramModels;
       set
       {
-        if (Equals(value, _programModels)) return;
-        _programModels = value;
+        if (Equals(value, _standardProgramModels)) return;
+        _standardProgramModels = value;
+        OnPropertyChanged();
+      }
+    }
+
+    public ObservableCollection<ExerciseModel> StandardExerciseModels
+    {
+      get => _standardExerciseModels;
+      set
+      {
+        if (Equals(value, _standardExerciseModels)) return;
+        _standardExerciseModels = value;
         OnPropertyChanged();
       }
     }

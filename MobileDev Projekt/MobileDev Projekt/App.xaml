@@ -8,12 +8,27 @@
         <Color x:Key="AccentColor">#EDDEE2</Color>
         
         <Style TargetType="Button">
-          <Setter Property="HeightRequest" Value="70"></Setter>
+          <Setter Property="HeightRequest" Value="50"/>
           <Setter Property="BorderRadius" Value="15" />
           <Setter Property="TextColor" Value="White" />
           <Setter Property="FontFamily" Value="TextFont" />
-          <Setter Property="Margin" Value="5,5,5,5"></Setter>
-          <Setter Property="BackgroundColor" Value="#154E4E"></Setter>
+          <Setter Property="BackgroundColor" Value="#154E4E"/>
+        </Style>
+        
+        <Style x:Key="EntryLabelStyle" TargetType="Label">
+          <Setter Property="VerticalOptions" Value="Center" />
+          <Setter Property="FontFamily" Value="TextFont" />
+          <Setter Property="TextColor" Value="{StaticResource MainColor}"/>
+        </Style>
+        
+        <Style x:Key="EntryStyle" TargetType="Entry">
+          <Setter Property="FontSize" Value="Small" />
+          <Setter Property="HeightRequest" Value="50" />
+          <Setter Property="HorizontalOptions" Value="Center"/>
+          <Setter Property="TextColor" Value="{StaticResource MainColor}"/>
+          <Setter Property="HorizontalTextAlignment" Value="Center"/>
+          <Setter Property="WidthRequest" Value="200"/>
+          <Setter Property="MaxLength" Value="10"/>
         </Style>
         
       </ResourceDictionary>

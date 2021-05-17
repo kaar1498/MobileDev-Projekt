@@ -3,22 +3,15 @@
 
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:forms="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
              xmlns:models="clr-namespace:MobileDev_Projekt.Models;assembly=MobileDev Projekt"
-             xmlns:renderedViews="http://sharpnado.com"
-             NavigationPage.HasNavigationBar="false"
-             x:Class="MobileDev_Projekt.Pages.HomePage"
+             x:Class="MobileDev_Projekt.Pages.SelectStandardExercisePage"
              BackgroundColor="{StaticResource AccentColor}"
+             NavigationPage.HasNavigationBar="false"
              x:DataType="models:HomePageModel">
   <ContentPage.Content>
     <StackLayout Margin="15,0,15,0">
-      <!-- Icon -->
-      <forms:SvgCachedImage WidthRequest="75"
-                            HeightRequest="75"
-                            Source="resource://MobileDev_Projekt.Resources.PsysioCamLogo.svg" />
-
       <!-- TitleLabel -->
-      <Label Text="Velkommen"
+      <Label Text="Standard øvelser"
              FontFamily="TitleFont"
              FontSize="Title"
              HorizontalOptions="Center"
@@ -32,14 +25,12 @@
              MaxLength="50"
              TextChanged="SearchBox_OnTextChanged"/>
       
-      <!-- Standard Programs -->
-      <renderedViews:HorizontalListView ItemsSource="{Binding StandardProgramModels}"
-                                        ItemHeight="40"
-                                        ListLayout="Vertical"
-                                        VerticalOptions="FillAndExpand">
-        <renderedViews:HorizontalListView.ItemTemplate>
-          <DataTemplate x:DataType="models:ProgramModel">
-            <renderedViews:DraggableViewCell x:Name="DraggableViewCell">
+      <!-- Standard Exercises -->
+      <ListView ItemsSource="{Binding StandardExerciseModels}"
+                VerticalOptions="FillAndExpand">
+        <ListView.ItemTemplate>
+          <DataTemplate x:DataType="models:ExerciseModel">
+            <ViewCell>
               <ContentView>
                 <SwipeView>
                   <SwipeView.LeftItems>
@@ -51,7 +42,7 @@
                   </SwipeView.LeftItems>
                   <StackLayout VerticalOptions="Center">
                     <StackLayout.GestureRecognizers>
-                      <TapGestureRecognizer Tapped="StandardProgram_OnTapped"
+                      <TapGestureRecognizer Tapped="StandardExercise_OnTapped"
                                             NumberOfTapsRequired="1" />
                     </StackLayout.GestureRecognizers>
                     <Label Text="{Binding Name}"
@@ -64,15 +55,16 @@
                   </StackLayout>
                 </SwipeView>
               </ContentView>
-            </renderedViews:DraggableViewCell>
+            </ViewCell>
           </DataTemplate>
-        </renderedViews:HorizontalListView.ItemTemplate>
-      </renderedViews:HorizontalListView>
-
-      <!-- Action button -->
-      <Button Text="Nyt program"
+        </ListView.ItemTemplate>
+      </ListView>
+      
+      <Button x:Name="UndoButton"
               Margin="0,0,0,15"
-              Clicked="NewProgramButton_Clicked"/>
+              Text="Tilbage"
+              HorizontalOptions="FillAndExpand"
+              Clicked="UndoButton_OnClicked" />
     </StackLayout>
   </ContentPage.Content>
 </ContentPage>

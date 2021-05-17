@@ -9,6 +9,7 @@ namespace MobileDev_Projekt.Models
   {
     private string _name;
     private ObservableCollection<ExerciseModel> _exerciseModels = new();
+    private bool _isStandard;
 
     public string Name
     {
@@ -28,6 +29,17 @@ namespace MobileDev_Projekt.Models
       {
         if (Equals(value, _exerciseModels)) return;
         _exerciseModels = value;
+        OnPropertyChanged();
+      }
+    }
+
+    public bool IsStandard
+    {
+      get => _isStandard;
+      set
+      {
+        if (value == _isStandard) return;
+        _isStandard = value;
         OnPropertyChanged();
       }
     }

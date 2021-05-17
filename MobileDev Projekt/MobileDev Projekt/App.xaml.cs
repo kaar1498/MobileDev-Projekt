@@ -18,7 +18,7 @@ namespace MobileDev_Projekt
 
             CrossConnectivity.Current.ConnectivityChanged += CurrentOnConnectivityChanged;
 
-            MainPage = new NavigationPage(new LoginPage());
+            MainPage = new NavigationPage(new HomePage());
 
             MainPage.SetValue(NavigationPage.BarBackgroundColorProperty, Color.Black);
             MainPage.SetValue(NavigationPage.BarTextColorProperty, Color.White);

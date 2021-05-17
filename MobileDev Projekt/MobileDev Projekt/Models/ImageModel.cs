@@ -15,6 +15,7 @@ namespace MobileDev_Projekt.Models
 
     public byte[] Bytes
     {
+      get => _bytes;
       set
       {
         if (Equals(value, _bytes)) return;

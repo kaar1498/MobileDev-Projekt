@@ -1,5 +1,6 @@
 # MobileDev-Projekt
 
 Mangler:
-- Style PublishProgramPage
-- NewExersicePage delete image button
+- Drag and drop exercises
+- Real API
+- Caching

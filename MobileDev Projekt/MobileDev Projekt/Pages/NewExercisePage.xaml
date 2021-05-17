@@ -4,39 +4,63 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:models="clr-namespace:MobileDev_Projekt.Models;assembly=MobileDev Projekt"
              xmlns:renderedViews="http://sharpnado.com"
+             xmlns:forms="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
              Title="Ny Øvelse"
              x:Class="MobileDev_Projekt.Pages.NewExercisePage"
              NavigationPage.HasNavigationBar="false"
              x:DataType="models:ExerciseModel"
              BackgroundColor="{StaticResource AccentColor}">
   <ContentPage.Content>
-    <StackLayout Margin="5,0,5,0">
+    <StackLayout Margin="15,0,15,0">
 
-      <Label Text="Ny øvelse"
+      <Label x:Name="TitleLabel"
+             Text="Ny øvelse"
              FontFamily="TitleFont"
              FontSize="Title"
              HorizontalOptions="Center"
-             Margin="0,15,0,0" />
+             Margin="0,15,0,0">
+        <Label.Triggers>
+          <DataTrigger TargetType="Label"
+                       Binding="{Binding IsStandard}"
+                       Value="True">
+              <Setter Property="Text" Value="Ny standard øvelse"/>
+            </DataTrigger>
+        </Label.Triggers>
+      </Label>
 
-      <Button Text="Tilføj Billeder" Clicked="AddPictureButton_Clicked" />
+      <Button Text="Tilføj Billeder" Clicked="AddPictureButton_Clicked"/>
 
+      <!-- Image editing view -->
       <renderedViews:HorizontalListView ItemsSource="{Binding ImageModels}"
                                         ItemHeight="200"
                                         ItemWidth="200"
                                         ListLayout="Linear"
                                         SnapStyle="Center"
                                         CollectionPadding="10,10,10,10"
-                                        HeightRequest="220">
+                                        HeightRequest="220"
+                                        EnableDragAndDrop="True">
         <renderedViews:HorizontalListView.ItemTemplate>
           <DataTemplate x:DataType="models:ImageModel">
             <renderedViews:DraggableViewCell x:Name="DraggableViewCell">
               <ContentView>
                 <StackLayout>
-                <Image Source="{Binding Image}"
-                       HeightRequest="150"/>
-                  <Editor Text="{Binding Description}"
-                          HeightRequest="50"
-                          FontSize="Small"/>
+                  <Grid>
+                    <forms:SvgCachedImage WidthRequest="25"
+                                          HeightRequest="25"
+                                          HorizontalOptions="End"
+                                          VerticalOptions="Start"
+                                          Source="resource://MobileDev_Projekt.Resources.Delete.svg">
+                      <forms:SvgCachedImage.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="DeleteImage_OnTapped"
+                                              NumberOfTapsRequired="1"/>
+                      </forms:SvgCachedImage.GestureRecognizers>
+                      </forms:SvgCachedImage>
+                    <Image Source="{Binding Image}"
+                           HeightRequest="150" />
+                  </Grid>
+                  <Entry Text="{Binding Description}"
+                         HeightRequest="50"
+                         FontSize="Small" />
                 </StackLayout>
               </ContentView>
             </renderedViews:DraggableViewCell>
@@ -44,91 +68,127 @@
         </renderedViews:HorizontalListView.ItemTemplate>
       </renderedViews:HorizontalListView>
 
-      <StackLayout Margin="0,0,0,10">
+      <!-- Editors -->
+      <StackLayout>
+        
+        <!-- Titel -->
         <Grid>
           <Grid.ColumnDefinitions>
             <ColumnDefinition />
             <ColumnDefinition />
           </Grid.ColumnDefinitions>
           <Label Grid.Column="0"
-                 VerticalOptions="Center"
+                 Style="{StaticResource EntryLabelStyle}"
                  Text="Titel" />
-          <Editor Grid.Column="1"
-                  FontSize="Small"
-                  HeightRequest="50"
-                  Text="{Binding Name}" />
+          <Entry Grid.Column="1"
+                 Style="{StaticResource EntryStyle}"
+                 MaxLength="50"
+                 Text="{Binding Name}"/>
         </Grid>
+        
+        <!-- Gentagelser -->
         <Grid>
           <Grid.ColumnDefinitions>
             <ColumnDefinition />
             <ColumnDefinition />
           </Grid.ColumnDefinitions>
           <Label Grid.Column="0"
-                 VerticalOptions="Center"
+                 Style="{StaticResource EntryLabelStyle}"
                  Text="Gentagelser" />
-          <Editor Grid.Column="1"
-                  FontSize="Small"
-                  HeightRequest="50"
-                  Keyboard="Numeric"
-                  Text="{Binding Repetitions}" />
+          <Entry Grid.Column="1"
+                 Style="{StaticResource EntryStyle}"
+                 Keyboard="Numeric"
+                 Text="{Binding Repetitions}" />
         </Grid>
+        
+        <!-- Varighed -->
         <Grid>
           <Grid.ColumnDefinitions>
             <ColumnDefinition />
             <ColumnDefinition />
           </Grid.ColumnDefinitions>
           <Label Grid.Column="0"
-                 VerticalOptions="Center"
+                 Style="{StaticResource EntryLabelStyle}"
                  Text="Varighed" />
-          <Editor Grid.Column="1"
-                  FontSize="Small"
-                  HeightRequest="50"
-                  Keyboard="Numeric"
-                  Text="{Binding Duration}" />
+          <Entry Grid.Column="1"
+                 Style="{StaticResource EntryStyle}"
+                 Keyboard="Numeric"
+                 Text="{Binding Duration}" />
         </Grid>
+        
+        <!-- Pause interval -->
         <Grid>
           <Grid.ColumnDefinitions>
             <ColumnDefinition />
             <ColumnDefinition />
           </Grid.ColumnDefinitions>
           <Label Grid.Column="0"
-                 VerticalOptions="Center"
+                 Style="{StaticResource EntryLabelStyle}"
                  Text="Pause interval" />
-          <Editor Grid.Column="1"
-                  FontSize="Small"
-                  HeightRequest="50"
-                  Keyboard="Numeric"
-                  Text="{Binding RestFrequency}" />
+          <Entry Grid.Column="1"
+                 Style="{StaticResource EntryStyle}"
+                 Keyboard="Numeric"
+                 Text="{Binding RestFrequency}" />
         </Grid>
+        
+        <!-- Pause varighed -->
         <Grid>
           <Grid.ColumnDefinitions>
             <ColumnDefinition />
             <ColumnDefinition />
           </Grid.ColumnDefinitions>
           <Label Grid.Column="0"
-                 VerticalOptions="Center"
+                 Style="{StaticResource EntryLabelStyle}"
                  Text="Pause varighed" />
-          <Editor Grid.Column="1"
-                  FontSize="Small"
-                  HeightRequest="50"
-                  Keyboard="Numeric"
-                  Text="{Binding RestDuration}" />
+          <Entry Grid.Column="1"
+                 Style="{StaticResource EntryStyle}"
+                 Keyboard="Numeric"
+                 Text="{Binding RestDuration}" />
+        </Grid>
+        
+        <!-- Standard program checkbox -->
+        <Grid>
+          <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+          </Grid.RowDefinitions>
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition />
+          </Grid.ColumnDefinitions>
+          <Label Grid.Column="0"
+                 Style="{StaticResource EntryLabelStyle}"
+                 Text="Standard øvelse" />
+          <CheckBox Grid.Column="1"
+                    HeightRequest="50"
+                    HorizontalOptions="Center"
+                    Color="{StaticResource MainColor}"
+                    IsChecked="{Binding IsStandard}" />
         </Grid>
       </StackLayout>
 
-      <Grid Margin="0,0,0,10">
-        <Grid.ColumnDefinitions>
-          <ColumnDefinition />
-          <ColumnDefinition />
-        </Grid.ColumnDefinitions>
-
-        <Button Grid.Column="0" x:Name="UndoButton"
+      <!-- Action buttons -->
+      <StackLayout Orientation="Horizontal"
+                   Margin="0,0,0,15"
+                   VerticalOptions="EndAndExpand"
+                   Spacing="10">
+        <Button x:Name="UndoButton"
                 Text="Fortryd"
+                HorizontalOptions="FillAndExpand"
                 Clicked="UndoButton_OnClicked" />
-        <Button Grid.Column="1" x:Name="CreateButton"
-                Text="Opret"
-                Clicked="CreateButton_OnClicked" />
-      </Grid>
+        <Button x:Name="CreateButton"
+                Text="Tilføj"
+                HorizontalOptions="FillAndExpand"
+                Clicked="CreateButton_OnClicked">
+          <Button.Triggers>
+            <DataTrigger TargetType="Button"
+                         Binding="{Binding IsStandard}"
+                         Value="True">
+              <Setter Property="Text" Value="Opret"/>
+            </DataTrigger>
+          </Button.Triggers>
+        </Button>
+      </StackLayout>
+      
     </StackLayout>
   </ContentPage.Content>
 </ContentPage>

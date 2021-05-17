@@ -13,6 +13,7 @@ namespace MobileDev_Projekt.Models
     private int _restFrequency = 1;
     private int _restDuration = 1;
     private int _repetitions = 1;
+    private bool _isStandard;
 
     public int Duration
     {
@@ -65,6 +66,17 @@ namespace MobileDev_Projekt.Models
       {
         if (value == _name) return;
         _name = value;
+        OnPropertyChanged();
+      }
+    }
+
+    public bool IsStandard
+    {
+      get => _isStandard;
+      set
+      {
+        if (value == _isStandard) return;
+        _isStandard = value;
         OnPropertyChanged();
       }
     }

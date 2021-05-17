@@ -10,7 +10,7 @@ namespace MobileDev_Projekt.Services
   {
     private const string Url = "https://www.Google.com";
     
-    public async Task<ObservableCollection<ProgramModel>> GetPrograms()
+    public async Task<ObservableCollection<ProgramModel>> GetStandardPrograms()
     {
       if (!await IsSiteReachableAndRunning(new Uri(Url)))
       {
@@ -23,6 +23,7 @@ namespace MobileDev_Projekt.Services
         new()
         {
           Name = "Aerobic",
+          IsStandard = true,
           ExerciseModels = new ObservableCollection<ExerciseModel>
           {
             new()
@@ -57,30 +58,37 @@ namespace MobileDev_Projekt.Services
         new()
         {
           Name = "Range of Motion",
+          IsStandard = true,
         },
         new()
         {
           Name = "Stretching",
+          IsStandard = true,
         },
         new()
         {
           Name = "Balancing",
+          IsStandard = true,
         },
         new()
         {
           Name = "Aquatic",
+          IsStandard = true,
         },
         new()
         {
           Name = "Strengthening",
+          IsStandard = true,
         },
         new()
         {
           Name = "Breathing",
+          IsStandard = true,
         },
         new()
         {
           Name = "Relaxation",
+          IsStandard = true,
         }
       };
     }
