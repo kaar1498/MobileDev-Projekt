@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Reflection;
-using System.Text;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace MobileDev_Projekt
+namespace MobileDev_Projekt.Services
 {
     [ContentProperty(nameof(Source))]
     public class ImageResourceExtension : IMarkupExtension
