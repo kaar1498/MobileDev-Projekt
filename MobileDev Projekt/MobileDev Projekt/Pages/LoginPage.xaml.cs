@@ -34,7 +34,8 @@ namespace MobileDev_Projekt.Pages
                 return;
             }
             
-            await Navigation.PushAsync(new HomePage());
+            //await Navigation.PushAsync(new HomePage());
+            Application.Current.MainPage = new NavigationPage(new HomePage());
         }
     }
 }
