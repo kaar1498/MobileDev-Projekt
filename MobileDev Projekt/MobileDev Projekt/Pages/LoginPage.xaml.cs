@@ -8,11 +8,11 @@ namespace MobileDev_Projekt.Pages
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class LoginPage : ContentPage
     {
-        private readonly RestClient _restClient;
+        private readonly FastCastleApi _fastCastleApi;
         public LoginPage()
         {
             InitializeComponent();
-            _restClient = new RestClient();
+            _fastCastleApi = new FastCastleApi();
         }
 
         private void RegisterButton_Clicked(object sender, EventArgs e)
@@ -22,11 +22,11 @@ namespace MobileDev_Projekt.Pages
 
         private async void LoginButton_Clicked(object sender, EventArgs e)
         {
-            var username = UsernameEntry.Text;
-            var password = PasswordEntry.Text;
+            var username = UsernameEntry.Text ??= "Test@Test.Test";
+            var password = PasswordEntry.Text ??= "Test";
             
             var isValid = !string.IsNullOrWhiteSpace(username) && !string.IsNullOrWhiteSpace(password);
-            isValid = await _restClient.Login() && isValid; //TODO Validate with API
+            isValid = await _fastCastleApi.Login(username, password) && isValid; //How can we validate password with strapi?
             
             if (!isValid)
             {
@@ -34,7 +34,6 @@ namespace MobileDev_Projekt.Pages
                 return;
             }
             
-            //await Navigation.PushAsync(new HomePage());
             Application.Current.MainPage = new NavigationPage(new HomePage());
         }
     }

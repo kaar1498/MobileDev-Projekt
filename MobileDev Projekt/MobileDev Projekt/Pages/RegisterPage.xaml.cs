@@ -13,11 +13,11 @@ namespace MobileDev_Projekt.Pages
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class RegisterPage : ContentPage
     {
-        private readonly RestClient _restClient;
+        private readonly FastCastleApi _fastCastleApi;
         public RegisterPage()
         {
             InitializeComponent();
-            _restClient = new RestClient();
+            _fastCastleApi = new FastCastleApi();
         }
         
         private async Task CreateNewUser(string name, string username, string password, string confirmPassword,
@@ -31,7 +31,7 @@ namespace MobileDev_Projekt.Pages
                     return;
                 }
                 
-                if (await _restClient.Register(name, username, password, email, address, phoneNumber))
+                if (await _fastCastleApi.Register(name, username, password, email, address, phoneNumber))
                 {
                     // hvis brugeren blev oprette og posted til serveren så redirect brugeren til mainPage.
                     await Navigation.PushModalAsync(new HomePage());

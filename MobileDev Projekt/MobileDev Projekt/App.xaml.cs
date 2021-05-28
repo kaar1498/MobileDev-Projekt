@@ -1,3 +1,5 @@
+using MobileDev_Projekt.Annotations;
+using MobileDev_Projekt.Entities;
 using MobileDev_Projekt.Pages;
 using MobileDev_Projekt.Services;
 using Xamarin.Forms;
@@ -11,8 +13,13 @@ namespace MobileDev_Projekt
 {
     public partial class App : Application
     {
+        public static ProgramRepository ProgramRepository { get; set; }
+        [CanBeNull] public static AppUser AppUser { get; set; }
+        
         public App()
         {
+            ProgramRepository = new ProgramRepository();
+            
             InitializeComponent();
             Sharpnado.HorizontalListView.Initializer.Initialize(true, false);
 

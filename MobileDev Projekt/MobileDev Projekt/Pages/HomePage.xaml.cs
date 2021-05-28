@@ -5,7 +5,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using Mapster;
 using MobileDev_Projekt.Models;
-using MobileDev_Projekt.Services;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -20,12 +19,13 @@ namespace MobileDev_Projekt.Pages
     public HomePage()
     {
       InitializeComponent();
+      
       _model = new HomePageModel();
       BindingContext = _model;
-      var apiService = new RestClient();
+      
       Task.Run(async () =>
       {
-        _model.StandardProgramModels = await apiService.GetStandardPrograms();
+        _model.StandardProgramModels = await App.ProgramRepository.ListAsync();
         AllProgramModels = _model.StandardProgramModels;
       });
     }
