@@ -1,45 +1,50 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Azure.Cosmos;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Http;
-using Microsoft.AspNetCore.Http;
-using Microsoft.Azure.Cosmos;
 using Microsoft.Extensions.Logging;
 using MobileDev.FunctionApp.Core;
 using MobileDev.FunctionApp.Core.Helpers;
 using User = MobileDev.FunctionApp.Core.Entities.User;
 
-namespace MobileDev.FunctionApp.Authentication
+namespace MobileDev.FunctionApp.Features.Authentication
 {
   public static class Login
   {
     private static readonly string EndpointUri = EnvironmentVariableHelper.GetEnvironmentVariable("CosmosEndPointUri");
     private static readonly string PrimaryKey = EnvironmentVariableHelper.GetEnvironmentVariable("CosmosPrimaryKey");
 
-    private static CosmosClient _cosmosClient;
-    private static Container _container;
+    private static CosmosClient? _cosmosClient;
+    private static Container? _container;
     private const string DatabaseId = "MobileDev";
     private const string ContainerId = "Users";
 
     [FunctionName("Login")]
     public static async Task<IActionResult> RunAsync(
       [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = Routes.Authentication.Login)]
-      Credentials credentials,
+      LoginRequest loginRequest,
       HttpRequest req, ILogger log)
     {
       _cosmosClient = new CosmosClient(EndpointUri, PrimaryKey, new CosmosClientOptions());
       _container = _cosmosClient.GetContainer(DatabaseId, ContainerId);
 
-      if (!await UserExistsAsync(credentials.Username, credentials.Password))
+      if (!await UserExistsAsync(loginRequest.Username, loginRequest.Password))
       {
         return new UnauthorizedResult();
       }
 
-      var token = TokenIssuer.IssueTokenForUser(credentials.Username);
-
-      return new OkObjectResult(token);
+      var token = TokenIssuer.IssueTokenForUser(loginRequest.Username);
+      var hostKey = EnvironmentVariableHelper.GetEnvironmentVariable("HOST_KEY");
+      
+      return new OkObjectResult(new LoginResponse
+      {
+        Jwl = token,
+        HostKey = hostKey
+      });
     }
 
     private static async Task<bool> UserExistsAsync(string username, string password)
@@ -59,11 +64,17 @@ namespace MobileDev.FunctionApp.Authentication
       return users.Any() && PasswordHelper.VerifyPassword(password, users.FirstOrDefault()?.PasswordHash);
     }
 
-    public class Credentials
+    public class LoginRequest
     {
       public string Username { get; set; }
 
       public string Password { get; set; }
+    }
+
+    private class LoginResponse
+    {
+      public string Jwl { get; set; }
+      public string HostKey { get; set; }
     }
   }
 }

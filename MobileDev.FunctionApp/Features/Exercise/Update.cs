@@ -1,26 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.IO;
-using System.Linq;
 using System.Threading.Tasks;
 using Mapster;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Azure.Cosmos;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Http;
-using Microsoft.AspNetCore.Http;
-using Microsoft.Azure.Cosmos;
-using Microsoft.Azure.WebJobs.Host;
 using Microsoft.Extensions.Logging;
 using MobileDev.FunctionApp.Core;
 using MobileDev.FunctionApp.Core.FunctionInvocationFilters;
 using MobileDev.FunctionApp.Core.Helpers;
-using Newtonsoft.Json;
-using Container = Microsoft.Azure.Cosmos.Container;
 
-namespace MobileDev.FunctionApp.Exercise
+namespace MobileDev.FunctionApp.Features.Exercise
 {
-  public class Get : AuthenticationFilter
+  public class Update : AuthenticationFilter
   {
     private static readonly string EndpointUri = EnvironmentVariableHelper.GetEnvironmentVariable("CosmosEndPointUri");
     private static readonly string PrimaryKey = EnvironmentVariableHelper.GetEnvironmentVariable("CosmosPrimaryKey");
@@ -30,9 +24,10 @@ namespace MobileDev.FunctionApp.Exercise
     private const string DatabaseId = "MobileDev";
     private const string ContainerId = "Exersices";
     
-    [FunctionName("Exercise_Get")]
+    [FunctionName("Exercise_Update")]
     public static async Task<IActionResult> RunAsync(
-      [HttpTrigger(AuthorizationLevel.User, "get", Route = Routes.Exercise.Get)]
+      [HttpTrigger(AuthorizationLevel.Admin, "put", Route = Routes.Exercise.Update)]
+      [FromBody] UpdateExerciseRequest programRequest,
       HttpRequest req,
       Guid id,
       ILogger log)
@@ -44,30 +39,38 @@ namespace MobileDev.FunctionApp.Exercise
       {
         return new UnauthorizedResult();
       }
-
-      var result = await GetAsync(id.ToString());
       
-      return new OkObjectResult(result?.Adapt<GetExerciseResponse>());
-    }
-    
-    private static async Task<Core.Entities.Exercise?> GetAsync(string id)
-    {
-      var sqlQueryText = $"SELECT * FROM c WHERE c.id = '{id}' AND c.partitionKey = '{Auth.Username}'";
-      var queryDefinition = new QueryDefinition(sqlQueryText);
-      var queryResultSetIterator = _container?.GetItemQueryIterator<Core.Entities.Exercise>(queryDefinition);
-
-      var users = new List<Core.Entities.Exercise>();
-
-      while (queryResultSetIterator is {HasMoreResults: true})
+      try
       {
-        var currentResultSet = await queryResultSetIterator.ReadNextAsync();
-        users.AddRange(currentResultSet);
+        var newExersice = programRequest.Adapt<Core.Entities.Exercise>();
+        newExersice.Id = id;
+        newExersice.PartitionKey = Auth.Username;
+        var result = await _container.UpsertItemAsync(newExersice, new PartitionKey(newExersice.PartitionKey));
+        return new OkObjectResult(result.Resource.Adapt<UpdateExerciseResponse>());
       }
-
-      return users.FirstOrDefault();
+      catch (Exception e)
+      {
+        return new ConflictObjectResult(e.Message);
+      }
     }
     
-    public class GetExerciseResponse
+    public class UpdateExerciseRequest
+    {
+      public string? Name { get; set; }
+      public List<GetImageResponse>? Images { get; set; }
+      public int? Duration { get; set; }
+      public int? RestFrequency { get; set; }
+      public int? RestDuration { get; set; }
+      public int? Repetitions { get; set; }
+
+      public class GetImageResponse
+      {
+        public byte[]? Bytes { get; set; }
+        public string? Description { get; set; }
+      }
+    }
+    
+    public class UpdateExerciseResponse
     {
       public Guid Id { get; set; }
       public string? Name { get; set; }
@@ -83,6 +86,5 @@ namespace MobileDev.FunctionApp.Exercise
         public string? Description { get; set; }
       }
     }
-    
   }
 }

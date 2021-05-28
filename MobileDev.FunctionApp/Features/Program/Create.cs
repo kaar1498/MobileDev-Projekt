@@ -12,9 +12,9 @@ using MobileDev.FunctionApp.Core;
 using MobileDev.FunctionApp.Core.FunctionInvocationFilters;
 using MobileDev.FunctionApp.Core.Helpers;
 
-namespace MobileDev.FunctionApp.Program
+namespace MobileDev.FunctionApp.Features.Program
 {
-  public class GetAll : AuthenticationFilter
+  public class Create : AuthenticationFilter
   {
     private static readonly string EndpointUri = EnvironmentVariableHelper.GetEnvironmentVariable("CosmosEndPointUri");
     private static readonly string PrimaryKey = EnvironmentVariableHelper.GetEnvironmentVariable("CosmosPrimaryKey");
@@ -24,10 +24,12 @@ namespace MobileDev.FunctionApp.Program
     private const string DatabaseId = "MobileDev";
     private const string ContainerId = "Programs";
     
-    [FunctionName("Program_GetAll")]
+    [FunctionName("Program_Create")]
     public static async Task<IActionResult> RunAsync(
-      [HttpTrigger(AuthorizationLevel.User, "get", Route = Routes.Program.GetAll)]
-      HttpRequest req, ILogger log)
+      [HttpTrigger(AuthorizationLevel.Admin, "post", Route = Routes.Program.Create)]
+      [FromBody] CreateProgramRequest programRequest,
+      HttpRequest req,
+      ILogger log)
     {
       _cosmosClient = new CosmosClient(EndpointUri, PrimaryKey, new CosmosClientOptions());
       _container = _cosmosClient.GetContainer(DatabaseId, ContainerId);
@@ -37,42 +39,33 @@ namespace MobileDev.FunctionApp.Program
         return new UnauthorizedResult();
       }
       
-      var result =await GeAllAsync();
-      
-      return new OkObjectResult(result.Adapt<List<GetAllProgramResponse>>());
-    }
-    
-    private static async Task<List<Core.Entities.Program>> GeAllAsync()
-    {
-      var sqlQueryText = $"SELECT * FROM c WHERE c.partitionKey = '{Auth.Username}'";
-      var queryDefinition = new QueryDefinition(sqlQueryText);
-      var queryResultSetIterator = _container?.GetItemQueryIterator<Core.Entities.Program>(queryDefinition);
-
-      var users = new List<Core.Entities.Program>();
-
-      while (queryResultSetIterator is {HasMoreResults: true})
+      try
       {
-        var currentResultSet = await queryResultSetIterator.ReadNextAsync();
-        users.AddRange(currentResultSet);
+        var newProgram = programRequest.Adapt<Core.Entities.Program>();
+        newProgram.Id = Guid.NewGuid();
+        newProgram.PartitionKey = Auth.Username;
+        var result = await _container.CreateItemAsync(newProgram, new PartitionKey(newProgram.PartitionKey));
+        return new OkObjectResult(result.Resource);
       }
-
-      return users;
+      catch (Exception e)
+      {
+        return new ConflictObjectResult(e.Message);
+      }
     }
-    
-    public class GetAllProgramResponse
+
+    public class CreateProgramRequest
     {
-      public Guid Id { get; set; }
       public string? Name { get; set; }
-      public List<GetAllExerciseResponse>? Exercises { get; set; }
-      public class GetAllExerciseResponse
+      public List<CreateExerciseRequest>? Exercises { get; set; }
+      public class CreateExerciseRequest
       {
         public string? Name { get; set; }
-        public List<GetAllImageResponse>? Images { get; set; }
+        public List<CreateImageRequest>? Images { get; set; }
         public int? Duration { get; set; }
         public int? RestFrequency { get; set; }
         public int? RestDuration { get; set; }
         public int? Repetitions { get; set; }
-        public class GetAllImageResponse
+        public class CreateImageRequest
         {
           public byte[]? Bytes { get; set; }
           public string? Description { get; set; }

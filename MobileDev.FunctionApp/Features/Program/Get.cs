@@ -1,23 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using Mapster;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Azure.Cosmos;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Http;
-using Microsoft.AspNetCore.Http;
-using Microsoft.Azure.Cosmos;
-using Microsoft.Azure.WebJobs.Host;
 using Microsoft.Extensions.Logging;
 using MobileDev.FunctionApp.Core;
 using MobileDev.FunctionApp.Core.FunctionInvocationFilters;
 using MobileDev.FunctionApp.Core.Helpers;
-using Newtonsoft.Json;
 
-namespace MobileDev.FunctionApp.Exercise
+namespace MobileDev.FunctionApp.Features.Program
 {
-  public class GetAll : AuthenticationFilter
+  public class Get : AuthenticationFilter
   {
     private static readonly string EndpointUri = EnvironmentVariableHelper.GetEnvironmentVariable("CosmosEndPointUri");
     private static readonly string PrimaryKey = EnvironmentVariableHelper.GetEnvironmentVariable("CosmosPrimaryKey");
@@ -25,12 +23,14 @@ namespace MobileDev.FunctionApp.Exercise
     private static CosmosClient? _cosmosClient;
     private static Container? _container;
     private const string DatabaseId = "MobileDev";
-    private const string ContainerId = "Exersices";
+    private const string ContainerId = "Programs";
     
-    [FunctionName("Exercise_GetAll")]
+    [FunctionName("Program_Get")]
     public static async Task<IActionResult> RunAsync(
-      [HttpTrigger(AuthorizationLevel.User, "get", Route = Routes.Exercise.GetAll)]
-      HttpRequest req, ILogger log)
+      [HttpTrigger(AuthorizationLevel.Admin, "get", Route = Routes.Program.Get)]
+      HttpRequest req,
+      Guid id,
+      ILogger log)
     {
       _cosmosClient = new CosmosClient(EndpointUri, PrimaryKey, new CosmosClientOptions());
       _container = _cosmosClient.GetContainer(DatabaseId, ContainerId);
@@ -39,19 +39,19 @@ namespace MobileDev.FunctionApp.Exercise
       {
         return new UnauthorizedResult();
       }
+
+      var result =await GetAsync(id.ToString());
       
-      var result =await GeAllAsync();
-      
-      return new OkObjectResult(result.Adapt<List<GetAllExerciseResponse>>());
+      return new OkObjectResult(result?.Adapt<GetProgramResponse>());
     }
     
-    private static async Task<List<Core.Entities.Exercise>> GeAllAsync()
+    private static async Task<Core.Entities.Program?> GetAsync(string id)
     {
-      var sqlQueryText = $"SELECT * FROM c WHERE c.partitionKey = '{Auth.Username}'";
+      var sqlQueryText = $"SELECT * FROM c WHERE c.id = '{id}' AND c.partitionKey = '{Auth.Username}'";
       var queryDefinition = new QueryDefinition(sqlQueryText);
-      var queryResultSetIterator = _container?.GetItemQueryIterator<Core.Entities.Exercise>(queryDefinition);
+      var queryResultSetIterator = _container?.GetItemQueryIterator<Core.Entities.Program>(queryDefinition);
 
-      var users = new List<Core.Entities.Exercise>();
+      var users = new List<Core.Entities.Program>();
 
       while (queryResultSetIterator is {HasMoreResults: true})
       {
@@ -59,24 +59,29 @@ namespace MobileDev.FunctionApp.Exercise
         users.AddRange(currentResultSet);
       }
 
-      return users;
+      return users.FirstOrDefault();
     }
     
-    public class GetAllExerciseResponse
+    public class GetProgramResponse
     {
       public Guid Id { get; set; }
       public string? Name { get; set; }
-      public List<GetImageResponse>? Images { get; set; }
-      public int? Duration { get; set; }
-      public int? RestFrequency { get; set; }
-      public int? RestDuration { get; set; }
-      public int? Repetitions { get; set; }
-
-      public class GetImageResponse
+      public List<GetExerciseResponse>? Exercises { get; set; }
+      public class GetExerciseResponse
       {
-        public byte[]? Bytes { get; set; }
-        public string? Description { get; set; }
+        public string? Name { get; set; }
+        public List<GetImageResponse>? Images { get; set; }
+        public int? Duration { get; set; }
+        public int? RestFrequency { get; set; }
+        public int? RestDuration { get; set; }
+        public int? Repetitions { get; set; }
+        public class GetImageResponse
+        {
+          public byte[]? Bytes { get; set; }
+          public string? Description { get; set; }
+        }
       }
     }
+    
   }
 }

@@ -12,7 +12,7 @@ using MobileDev.FunctionApp.Core;
 using MobileDev.FunctionApp.Core.FunctionInvocationFilters;
 using MobileDev.FunctionApp.Core.Helpers;
 
-namespace MobileDev.FunctionApp.Program
+namespace MobileDev.FunctionApp.Features.Program
 {
   public class Update : AuthenticationFilter
   {
@@ -26,7 +26,7 @@ namespace MobileDev.FunctionApp.Program
     
     [FunctionName("Program_Update")]
     public static async Task<IActionResult> RunAsync(
-      [HttpTrigger(AuthorizationLevel.User, "put", Route = Routes.Program.Update)]
+      [HttpTrigger(AuthorizationLevel.Admin, "put", Route = Routes.Program.Update)]
       [FromBody] UpdateProgramRequest programRequest,
       HttpRequest req,
       Guid id,

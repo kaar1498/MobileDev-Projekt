@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Mapster;
 using Microsoft.AspNetCore.Http;
@@ -13,9 +12,9 @@ using MobileDev.FunctionApp.Core;
 using MobileDev.FunctionApp.Core.FunctionInvocationFilters;
 using MobileDev.FunctionApp.Core.Helpers;
 
-namespace MobileDev.FunctionApp.Program
+namespace MobileDev.FunctionApp.Features.Program
 {
-  public class Get : AuthenticationFilter
+  public class GetAll : AuthenticationFilter
   {
     private static readonly string EndpointUri = EnvironmentVariableHelper.GetEnvironmentVariable("CosmosEndPointUri");
     private static readonly string PrimaryKey = EnvironmentVariableHelper.GetEnvironmentVariable("CosmosPrimaryKey");
@@ -25,12 +24,10 @@ namespace MobileDev.FunctionApp.Program
     private const string DatabaseId = "MobileDev";
     private const string ContainerId = "Programs";
     
-    [FunctionName("Program_Get")]
+    [FunctionName("Program_GetAll")]
     public static async Task<IActionResult> RunAsync(
-      [HttpTrigger(AuthorizationLevel.User, "get", Route = Routes.Program.Get)]
-      HttpRequest req,
-      Guid id,
-      ILogger log)
+      [HttpTrigger(AuthorizationLevel.Admin, "get", Route = Routes.Program.GetAll)]
+      HttpRequest req, ILogger log)
     {
       _cosmosClient = new CosmosClient(EndpointUri, PrimaryKey, new CosmosClientOptions());
       _container = _cosmosClient.GetContainer(DatabaseId, ContainerId);
@@ -39,15 +36,15 @@ namespace MobileDev.FunctionApp.Program
       {
         return new UnauthorizedResult();
       }
-
-      var result =await GetAsync(id.ToString());
       
-      return new OkObjectResult(result?.Adapt<GetProgramResponse>());
+      var result =await GeAllAsync();
+      
+      return new OkObjectResult(result.Adapt<List<GetAllProgramResponse>>());
     }
     
-    private static async Task<Core.Entities.Program?> GetAsync(string id)
+    private static async Task<List<Core.Entities.Program>> GeAllAsync()
     {
-      var sqlQueryText = $"SELECT * FROM c WHERE c.id = '{id}' AND c.partitionKey = '{Auth.Username}'";
+      var sqlQueryText = $"SELECT * FROM c WHERE c.partitionKey = '{Auth.Username}'";
       var queryDefinition = new QueryDefinition(sqlQueryText);
       var queryResultSetIterator = _container?.GetItemQueryIterator<Core.Entities.Program>(queryDefinition);
 
@@ -59,29 +56,28 @@ namespace MobileDev.FunctionApp.Program
         users.AddRange(currentResultSet);
       }
 
-      return users.FirstOrDefault();
+      return users;
     }
     
-    public class GetProgramResponse
+    public class GetAllProgramResponse
     {
       public Guid Id { get; set; }
       public string? Name { get; set; }
-      public List<GetExerciseResponse>? Exercises { get; set; }
-      public class GetExerciseResponse
+      public List<GetAllExerciseResponse>? Exercises { get; set; }
+      public class GetAllExerciseResponse
       {
         public string? Name { get; set; }
-        public List<GetImageResponse>? Images { get; set; }
+        public List<GetAllImageResponse>? Images { get; set; }
         public int? Duration { get; set; }
         public int? RestFrequency { get; set; }
         public int? RestDuration { get; set; }
         public int? Repetitions { get; set; }
-        public class GetImageResponse
+        public class GetAllImageResponse
         {
           public byte[]? Bytes { get; set; }
           public string? Description { get; set; }
         }
       }
     }
-    
   }
 }

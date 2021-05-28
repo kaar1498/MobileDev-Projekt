@@ -2,19 +2,19 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Mapster;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Azure.Cosmos;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Http;
-using Microsoft.AspNetCore.Http;
-using Microsoft.Azure.Cosmos;
 using Microsoft.Extensions.Logging;
 using MobileDev.FunctionApp.Core;
 using MobileDev.FunctionApp.Core.FunctionInvocationFilters;
 using MobileDev.FunctionApp.Core.Helpers;
 
-namespace MobileDev.FunctionApp.Exercise
+namespace MobileDev.FunctionApp.Features.Exercise
 {
-  public class Create : AuthenticationFilter
+  public class GetAll : AuthenticationFilter
   {
     private static readonly string EndpointUri = EnvironmentVariableHelper.GetEnvironmentVariable("CosmosEndPointUri");
     private static readonly string PrimaryKey = EnvironmentVariableHelper.GetEnvironmentVariable("CosmosPrimaryKey");
@@ -23,46 +23,53 @@ namespace MobileDev.FunctionApp.Exercise
     private static Container? _container;
     private const string DatabaseId = "MobileDev";
     private const string ContainerId = "Exersices";
-
-    [FunctionName("Exercise_Create")]
+    
+    [FunctionName("Exercise_GetAll")]
     public static async Task<IActionResult> RunAsync(
-      [HttpTrigger(AuthorizationLevel.User, "post", Route = Routes.Exercise.Create)]
-      [FromBody] CreateExerciseRequest request,
-      HttpRequest req,
-      ILogger log)
+      [HttpTrigger(AuthorizationLevel.Admin, "get", Route = Routes.Exercise.GetAll)]
+      HttpRequest req, ILogger log)
     {
       _cosmosClient = new CosmosClient(EndpointUri, PrimaryKey, new CosmosClientOptions());
       _container = _cosmosClient.GetContainer(DatabaseId, ContainerId);
-
+      
       if (!Auth.IsValid)
       {
         return new UnauthorizedResult();
       }
-
-      try
-      {
-        var newExercise = request.Adapt<Core.Entities.Exercise>();
-        newExercise.Id = Guid.NewGuid();
-        newExercise.PartitionKey = Auth.Username;
-        var result = await _container.CreateItemAsync(newExercise, new PartitionKey(newExercise.PartitionKey));
-        return new OkObjectResult(result.Resource);
-      }
-      catch (Exception e)
-      {
-        return new ConflictObjectResult(e.Message);
-      }
+      
+      var result =await GeAllAsync();
+      
+      return new OkObjectResult(result.Adapt<List<GetAllExerciseResponse>>());
     }
-
-    public class CreateExerciseRequest
+    
+    private static async Task<List<Core.Entities.Exercise>> GeAllAsync()
     {
+      var sqlQueryText = $"SELECT * FROM c WHERE c.partitionKey = '{Auth.Username}'";
+      var queryDefinition = new QueryDefinition(sqlQueryText);
+      var queryResultSetIterator = _container?.GetItemQueryIterator<Core.Entities.Exercise>(queryDefinition);
+
+      var users = new List<Core.Entities.Exercise>();
+
+      while (queryResultSetIterator is {HasMoreResults: true})
+      {
+        var currentResultSet = await queryResultSetIterator.ReadNextAsync();
+        users.AddRange(currentResultSet);
+      }
+
+      return users;
+    }
+    
+    public class GetAllExerciseResponse
+    {
+      public Guid Id { get; set; }
       public string? Name { get; set; }
-      public List<CreateImageRequest>? Images { get; set; }
+      public List<GetImageResponse>? Images { get; set; }
       public int? Duration { get; set; }
       public int? RestFrequency { get; set; }
       public int? RestDuration { get; set; }
       public int? Repetitions { get; set; }
 
-      public class CreateImageRequest
+      public class GetImageResponse
       {
         public byte[]? Bytes { get; set; }
         public string? Description { get; set; }

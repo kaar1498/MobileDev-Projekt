@@ -1,19 +1,16 @@
 ﻿using System;
-using System.IO;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Azure.Cosmos;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Http;
-using Microsoft.AspNetCore.Http;
-using Microsoft.Azure.Cosmos;
-using Microsoft.Azure.WebJobs.Host;
 using Microsoft.Extensions.Logging;
 using MobileDev.FunctionApp.Core;
 using MobileDev.FunctionApp.Core.FunctionInvocationFilters;
 using MobileDev.FunctionApp.Core.Helpers;
-using Newtonsoft.Json;
 
-namespace MobileDev.FunctionApp.Exercise
+namespace MobileDev.FunctionApp.Features.Exercise
 {
   public class Delete : AuthenticationFilter
   {
@@ -28,7 +25,7 @@ namespace MobileDev.FunctionApp.Exercise
     
     [FunctionName("Exercise_Delete")]
     public static async Task<IActionResult> RunAsync(
-      [HttpTrigger(AuthorizationLevel.User, "delete", Route = Routes.Exercise.Delete)]
+      [HttpTrigger(AuthorizationLevel.Admin, "delete", Route = Routes.Exercise.Delete)]
       HttpRequest req,
       Guid id,
       ILogger log)
