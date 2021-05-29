@@ -3,6 +3,7 @@ using MobileDev_Projekt.Entities;
 using MobileDev_Projekt.Services;
 using RestSharp;
 using Rg.Plugins.Popup.Services;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -50,6 +51,16 @@ namespace MobileDev_Projekt.Pages
           return;
         }
         
+        try
+        {
+          await SecureStorage.SetAsync("jwt", auth.Jwt);
+          await SecureStorage.SetAsync("hostKey", auth.HostKey);
+        }
+        catch
+        {
+          // ignored
+        }
+
         App.ApiService.AuthenticateClient(auth.Jwt, auth.HostKey);
         
         Application.Current.MainPage = new NavigationPage(new HomePage());
