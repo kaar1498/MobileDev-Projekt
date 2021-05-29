@@ -1,0 +1,50 @@
+﻿<?xml version="1.0"
+      encoding="utf-8"?>
+
+<pages:PopupPage xmlns="http://xamarin.com/schemas/2014/forms"
+                 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                 xmlns:pages="http://rotorgames.com"
+                 x:Class="MobileDev_Projekt.Pages.BusyPopup">
+  <pages:PopupPage.Animation>
+    <pages:ScaleAnimation PositionOut="Bottom" />
+  </pages:PopupPage.Animation>
+  <Grid>
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="90*" />
+    </Grid.ColumnDefinitions>
+    <Frame CornerRadius="5"
+           Padding="5"
+           VerticalOptions="Center"
+           HeightRequest="70"
+           BackgroundColor="White"
+           HasShadow="True"
+           Grid.Column="0"
+           Grid.Row="0"
+           Margin="10,0,10,0">
+      <Grid BackgroundColor="White"
+            HeightRequest="80">
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="30*" />
+          <ColumnDefinition Width="70*" />
+        </Grid.ColumnDefinitions>
+        <ActivityIndicator x:Name="BusyAI"
+                           Color="Red"
+                           Scale=".5"
+                           Grid.Column="0"
+                           Grid.Row="0"
+                           IsVisible="True"
+                           IsRunning="True"
+                           IsEnabled="True" />
+        <Label x:Name="BusyReason"
+               Text="Something is running"
+               TextColor="Black"
+               HorizontalOptions="StartAndExpand"
+               Grid.Column="1"
+               Grid.Row="0"
+               VerticalOptions="Center"
+               Margin="10,0,0,0"
+               FontSize="Small" />
+      </Grid>
+    </Frame>
+  </Grid>
+</pages:PopupPage>

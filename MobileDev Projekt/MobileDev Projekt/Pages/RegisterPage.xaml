@@ -13,13 +13,13 @@
                 VerticalOptions="Start" 
                 HorizontalOptions="CenterAndExpand" />
             <StackLayout VerticalOptions="CenterAndExpand" HorizontalOptions="Center" WidthRequest="320" Spacing="20" Padding="10">
-                <Entry x:Name="NameEntry" Placeholder="John Doe"/>
+                <Entry x:Name="UserName" Placeholder="Brugernavn"/>
                 <Entry x:Name="EmailEntry" Placeholder="John@email.com"/>
                 <Entry x:Name="PasswordEntry" Placeholder="Password" IsPassword="True"/>
                 <Entry x:Name="PasswordRepeatEntry" Placeholder="Gentag Password" IsPassword="True"/>
-                <Entry x:Name="Address" Placeholder="Addresse"/>
+                <Entry x:Name="NameEntry" Placeholder="John Doe"/>
                 <Entry x:Name="PhoneNumberEntry" Placeholder="Telefon" Keyboard="Numeric"/>
-                <Entry x:Name="UserName" Placeholder="Brugernavn"/>
+                <Entry x:Name="Address" Placeholder="Addresse"/>
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="2*" />

@@ -12,12 +12,12 @@ namespace MobileDev_Projekt.Converters
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
       var data = (IEnumerable<ImageModel>) value;
-      return data.FirstOrDefault()?.Image;
+      return data?.FirstOrDefault()?.Image;
     }
 
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
     {
-      throw new NotImplementedException();
+      return null;
     }
   }
 }

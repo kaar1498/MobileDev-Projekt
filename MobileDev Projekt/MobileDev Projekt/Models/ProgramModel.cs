@@ -1,6 +1,8 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using Mapster;
 using MobileDev_Projekt.Annotations;
 
 namespace MobileDev_Projekt.Models
@@ -11,6 +13,7 @@ namespace MobileDev_Projekt.Models
     private ObservableCollection<ExerciseModel> _exerciseModels = new();
     private bool _isStandard;
 
+    public Guid Id { get; set; }
     public string Name
     {
       get => _name;
@@ -21,7 +24,7 @@ namespace MobileDev_Projekt.Models
         OnPropertyChanged();
       }
     }
-
+    
     public ObservableCollection<ExerciseModel> ExerciseModels
     {
       get => _exerciseModels;
