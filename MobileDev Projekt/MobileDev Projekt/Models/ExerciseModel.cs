@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using MobileDev_Projekt.Annotations;
@@ -9,13 +10,14 @@ namespace MobileDev_Projekt.Models
   {
     private string _name;
     private ObservableCollection<ImageModel> _imageModels = new();
-    private int _duration = 1;
-    private int _restFrequency = 1;
-    private int _restDuration = 1;
-    private int _repetitions = 1;
+    private int? _duration;
+    private int? _restFrequency;
+    private int? _restDuration;
+    private int? _repetitions;
     private bool _isStandard;
 
-    public int Duration
+    public Guid Id { get; set; }
+    public int? Duration
     {
       get => _duration;
       set
@@ -26,7 +28,7 @@ namespace MobileDev_Projekt.Models
       }
     }
 
-    public int Repetitions
+    public int? Repetitions
     {
       get => _repetitions;
       set
@@ -37,7 +39,7 @@ namespace MobileDev_Projekt.Models
       }
     }
 
-    public int RestFrequency
+    public int? RestFrequency
     {
       get => _restFrequency;
       set
@@ -48,7 +50,7 @@ namespace MobileDev_Projekt.Models
       }
     }
 
-    public int RestDuration
+    public int? RestDuration
     {
       get => _restDuration;
       set

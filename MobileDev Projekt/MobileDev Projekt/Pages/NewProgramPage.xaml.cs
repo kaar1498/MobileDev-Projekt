@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Mapster;
 using MobileDev_Projekt.Models;
 using MobileDev_Projekt.Services;
+using Rg.Plugins.Popup.Services;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -14,10 +15,9 @@ namespace MobileDev_Projekt.Pages
   {
     private readonly ProgramModel _model;
     private readonly ProgramModel _remoteModel;
-    private readonly HomePageModel _homePageModel;
     private bool IsEditMode;
 
-    public NewProgramPage(HomePageModel homePageModel, ProgramModel remoteModel = null, bool isEditMode = false)
+    public NewProgramPage(ProgramModel remoteModel = null, bool isEditMode = false)
     {
       InitializeComponent();
 
@@ -31,7 +31,6 @@ namespace MobileDev_Projekt.Pages
       }
 
       _model ??= new ProgramModel();
-      _homePageModel = homePageModel;
 
       BindingContext = _model;
     }
@@ -43,29 +42,24 @@ namespace MobileDev_Projekt.Pages
 
     private async void ExerciseButton_OnClicked(object sender, EventArgs e)
     {
-      await Navigation.PushAsync(new NewExercisePage(new ExerciseModel(), _model, _homePageModel));
+      await Navigation.PushAsync(new NewExercisePage(new ExerciseModel(), _model));
     }
 
     private async void StandardExerciseButton_OnClicked(object sender, EventArgs e)
     {
-      await Navigation.PushAsync(new SelectStandardExercisePage(_model, _homePageModel));
+      await Navigation.PushAsync(new SelectStandardExercisePage(_model));
     }
     
     private void UndoButton_OnClicked(object sender, EventArgs e)
     {
-      if (IsEditMode is false)
-      {
-        _homePageModel?.StandardProgramModels.Remove(_remoteModel);
-      }
-
       Navigation.PopAsync();
     }
 
-    private void ActionButton_OnClicked(object sender, EventArgs e)
+    private async void ActionButton_OnClicked(object sender, EventArgs e)
     {
       if (string.IsNullOrWhiteSpace(_model.Name))
       {
-        DependencyService.Get<IMessage>().LongAlert("Tiitel skal udfyldes");
+        DependencyService.Get<IMessage>().LongAlert("Titel skal udfyldes");
         return;
       }
 
@@ -73,12 +67,28 @@ namespace MobileDev_Projekt.Pages
 
       if (_remoteModel.IsStandard)
       {
-        _homePageModel.StandardProgramModels.Add(_model);
-        Navigation.PopAsync();
+        await PopupNavigation.Instance.PushAsync(new BusyPopup("Creating program"));
+        try
+        {
+          if (!await App.ProgramRepository.AddAsync(_model))
+          {
+            DependencyService.Get<IMessage>().LongAlert("Error adding program");
+            return;
+          }
+        }
+        catch
+        {
+          DependencyService.Get<IMessage>().LongAlert("Error adding program");
+        }
+        finally
+        {
+          await PopupNavigation.Instance.PopAsync();
+        }
+        await Navigation.PopAsync();
         return;
       }
       
-      Navigation.PushAsync(new PublishProgramPage(_remoteModel));
+      await Navigation.PushAsync(new PublishProgramPage(_remoteModel));
     }
 
     private void EditSwipeItem_OnInvoked(object sender, EventArgs e)
@@ -86,7 +96,7 @@ namespace MobileDev_Projekt.Pages
       var item = sender as SwipeItem;
       var exerciseModel = item.BindingContext as ExerciseModel;
       exerciseModel.IsStandard = false;
-      Navigation.PushAsync(new NewExercisePage(exerciseModel, _model, _homePageModel, true));
+      Navigation.PushAsync(new NewExercisePage(exerciseModel, _model, true));
     }
 
     private void DeleteSwipeItem_OnInvoked(object sender, EventArgs e)

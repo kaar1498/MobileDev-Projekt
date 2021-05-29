@@ -1,5 +1,3 @@
-using MobileDev_Projekt.Annotations;
-using MobileDev_Projekt.Entities;
 using MobileDev_Projekt.Pages;
 using MobileDev_Projekt.Services;
 using Xamarin.Forms;
@@ -9,44 +7,36 @@ using Plugin.Connectivity.Abstractions;
 [assembly: ExportFont("OpenSans-Bold.ttf", Alias = "TitleFont")]
 [assembly: ExportFont("OpenSans-Light.ttf", Alias = "TextLightFont")]
 [assembly: ExportFont("OpenSans-Regular.ttf", Alias = "TextFont")]
+
 namespace MobileDev_Projekt
 {
-    public partial class App : Application
+  public partial class App
+  {
+    public static ApiService ApiService { get; set; }
+    public static ProgramRepository ProgramRepository { get; set; }
+    public static ExerciseRepository ExerciseRepository { get; set; }
+
+    public App()
     {
-        public static ProgramRepository ProgramRepository { get; set; }
-        [CanBeNull] public static AppUser AppUser { get; set; }
-        
-        public App()
-        {
-            ProgramRepository = new ProgramRepository();
-            
-            InitializeComponent();
-            Sharpnado.HorizontalListView.Initializer.Initialize(true, false);
+      ApiService = new ApiService();
+      ProgramRepository = new ProgramRepository();
+      ExerciseRepository = new ExerciseRepository();
 
-            CrossConnectivity.Current.ConnectivityChanged += CurrentOnConnectivityChanged;
+      InitializeComponent();
+      Sharpnado.HorizontalListView.Initializer.Initialize(true, false);
 
-            MainPage = new NavigationPage(new LoginPage());
+      CrossConnectivity.Current.ConnectivityChanged += CurrentOnConnectivityChanged;
 
-            MainPage.SetValue(NavigationPage.BarBackgroundColorProperty, Color.Black);
-            MainPage.SetValue(NavigationPage.BarTextColorProperty, Color.White);
-        }
+      MainPage = new NavigationPage(new LoginPage());
 
-        private void CurrentOnConnectivityChanged(object sender, ConnectivityChangedEventArgs e)
-        {
-            DependencyService.Get<IMessage>()
-                .LongAlert(CrossConnectivity.Current.IsConnected ? "Connection Established" : "Connection Lost");
-        }
-
-        protected override void OnStart()
-        {
-        }
-
-        protected override void OnSleep()
-        {
-        }
-
-        protected override void OnResume()
-        {
-        }
+      MainPage.SetValue(NavigationPage.BarBackgroundColorProperty, Color.Black);
+      MainPage.SetValue(NavigationPage.BarTextColorProperty, Color.White);
     }
+
+    private void CurrentOnConnectivityChanged(object sender, ConnectivityChangedEventArgs e)
+    {
+      DependencyService.Get<IMessage>()
+        .LongAlert(CrossConnectivity.Current.IsConnected ? "Connection Established" : "Connection Lost");
+    }
+  }
 }

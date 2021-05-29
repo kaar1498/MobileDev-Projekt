@@ -55,14 +55,14 @@ namespace MobileDev.FunctionApp.Features.Authentication
       
       return new OkObjectResult(new RegisterResponse
       {
-        Jwl = token,
+        Jwt = token,
         HostKey = hostKey
       });
     }
 
     private static async Task<bool> UserExistsAsync(string username)
     {
-      var sqlQueryText = $"SELECT c.username FROM c WHERE c.username = '{username}'";
+      var sqlQueryText = $"SELECT c.username FROM c WHERE LOWER(c.Username) = '{username.ToLower()}'";
       var queryDefinition = new QueryDefinition(sqlQueryText);
       var queryResultSetIterator = _container?.GetItemQueryIterator<User>(queryDefinition);
 
@@ -89,7 +89,7 @@ namespace MobileDev.FunctionApp.Features.Authentication
     
     private class RegisterResponse
     {
-      public string Jwl { get; set; }
+      public string Jwt { get; set; }
       public string HostKey { get; set; }
     }
   }

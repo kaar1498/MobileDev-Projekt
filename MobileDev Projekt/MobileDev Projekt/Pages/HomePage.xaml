@@ -32,6 +32,8 @@
              MaxLength="50"
              TextChanged="SearchBox_OnTextChanged"/>
       
+      <ActivityIndicator x:Name="ActivityIndicator"/>
+      
       <!-- Standard Programs -->
       <renderedViews:HorizontalListView ItemsSource="{Binding StandardProgramModels}"
                                         ItemHeight="40"

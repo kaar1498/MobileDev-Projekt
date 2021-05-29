@@ -49,7 +49,7 @@
                                           HeightRequest="25"
                                           HorizontalOptions="End"
                                           VerticalOptions="Start"
-                                          Source="resource://MobileDev_Projekt.Resources.Delete.svg">
+                                          Source="resource://MobileDev_Projekt.Resources.DeleteAsync.svg">
                       <forms:SvgCachedImage.GestureRecognizers>
                         <TapGestureRecognizer Tapped="DeleteImage_OnTapped"
                                               NumberOfTapsRequired="1"/>

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace MobileDev.FunctionApp.Core.Entities
+namespace MobileDev_Projekt.Entities
 {
   public class Exercise : BaseEntity
   {

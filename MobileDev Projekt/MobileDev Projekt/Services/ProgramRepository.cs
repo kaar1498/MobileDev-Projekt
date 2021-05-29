@@ -6,48 +6,66 @@ using System.Threading.Tasks;
 using Mapster;
 using MobileDev_Projekt.Entities;
 using MobileDev_Projekt.Models;
+using RestSharp;
 
 namespace MobileDev_Projekt.Services
 {
   public class ProgramRepository
   {
-    private readonly FastCastleApi _fastCastleApi;
-
-    public ProgramRepository()
-    {
-      _fastCastleApi = new FastCastleApi();
-    }
-
+    private ObservableCollection<ProgramModel> _programModels;
+    
     public async Task<ObservableCollection<ProgramModel>> ListAsync()
     {
-      ObservableCollection<ProgramModel> cache = null;
+      if (_programModels is not null) return _programModels;
+      var request = new RestRequest("/programs") {Method = Method.GET};
+      var response = await App.ApiService.ExecuteAsync<IEnumerable<Program>>(request);
+      var enumerable = response as Program[] ?? response.ToArray();
       
-      if (cache is not null) return new ObservableCollection<ProgramModel>(); //TODO return cache
-      
-      var data = await _fastCastleApi.GetExercisePlans(App.AppUser.Id);
-      var exercisePlans = data as ExercisePlan[] ?? data.ToArray();
-      
-      if (!exercisePlans.Any()) return new ObservableCollection<ProgramModel>();
-      
-      var mapped = exercisePlans.Adapt<IEnumerable<ProgramModel>>();
-      //TODO Save to cache
-      return new ObservableCollection<ProgramModel>(mapped);
-    }
+      var models = enumerable.Adapt<ObservableCollection<ProgramModel>>();
+      foreach (var model in models)
+      {
+        model.ExerciseModels = new ObservableCollection<ExerciseModel>(enumerable.FirstOrDefault(m => m.Id == model.Id)?.Exercises.Adapt<List<ExerciseModel>>() ?? new List<ExerciseModel>());
+      }
 
-    public void Get(Guid id)
-    {
+      return _programModels = models;
     }
-
-    public void Add()
+    
+    public async Task<bool> AddAsync(ProgramModel model)
     {
+      try
+      {
+        var program = model.Adapt<Program>();
+        program.Exercises = model.ExerciseModels.Adapt<List<Exercise>>();
+
+        var request = new RestRequest($"/programs") {Method = Method.POST};
+        request.AddJsonBody(program);
+        
+        var response = await App.ApiService.ExecuteAsync<Program>(request);
+        
+        var newModel = response.Adapt<ProgramModel>();
+        newModel.ExerciseModels = new ObservableCollection<ExerciseModel>(response.Exercises.Adapt<List<ExerciseModel>>());
+        _programModels.Add(newModel);
+        return true;
+      }
+      catch
+      {
+        return false;
+      }
     }
-
-    public void Update()
+    
+    public async Task<bool> DeleteAsync(Guid? id)
     {
-    }
-
-    public void Delete()
-    {
+      try
+      {
+        var request = new RestRequest($"/programs/{id}") {Method = Method.DELETE};
+        await App.ApiService.ExecuteAsync<Program>(request);
+        _programModels.Remove(_programModels.FirstOrDefault(m => m.Id == id));
+        return true;
+      }
+      catch
+      {
+        return false;
+      }
     }
   }
 }

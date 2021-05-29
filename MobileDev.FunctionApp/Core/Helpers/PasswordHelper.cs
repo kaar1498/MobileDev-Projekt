@@ -17,7 +17,7 @@ namespace MobileDev.FunctionApp.Core.Helpers
       return Convert.ToBase64String(hashBytes);
     }
 
-    public static bool VerifyPassword(string password, string savedPasswordHash)
+    public static bool VerifyPassword(string password, string? savedPasswordHash)
     {
       var hashBytes = Convert.FromBase64String(savedPasswordHash ?? throw new ArgumentNullException());
       var salt = new byte[16];

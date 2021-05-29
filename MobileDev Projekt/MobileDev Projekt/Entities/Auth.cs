@@ -1,8 +1,8 @@
-﻿
-namespace MobileDev_Projekt.Entities
+﻿namespace MobileDev_Projekt.Entities
 {
   public class Auth
   {
-    public string jwt { get; set; }
+    public string Jwt { get; set; }
+    public string HostKey { get; set; }
   }
 }

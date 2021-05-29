@@ -5,6 +5,7 @@ using FFImageLoading.Svg.Forms;
 using Mapster;
 using MobileDev_Projekt.Models;
 using MobileDev_Projekt.Services;
+using Rg.Plugins.Popup.Services;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -17,16 +18,15 @@ namespace MobileDev_Projekt.Pages
     private readonly ExerciseModel _model;
     private readonly ExerciseModel _remoteModel;
     private readonly ProgramModel _programPageModel;
-    private readonly HomePageModel _homePageModel;
     private bool IsEditMode;
 
-    public NewExercisePage(ExerciseModel remoteModel, ProgramModel programPageModel, HomePageModel homePageModel , bool isEditMode = false)
+    public NewExercisePage(ExerciseModel remoteModel, ProgramModel programPageModel, bool isEditMode = false)
     {
       InitializeComponent();
-      
+
       IsEditMode = isEditMode;
       _remoteModel = remoteModel;
-      
+
       if (IsEditMode is true)
       {
         SetEditMode();
@@ -35,7 +35,6 @@ namespace MobileDev_Projekt.Pages
 
       _model ??= new ExerciseModel();
       _programPageModel = programPageModel;
-      _homePageModel = homePageModel;
 
       BindingContext = _model;
     }
@@ -52,11 +51,11 @@ namespace MobileDev_Projekt.Pages
       {
         _programPageModel?.ExerciseModels.Remove(_remoteModel);
       }
-      
+
       Navigation.PopAsync();
     }
 
-    private void CreateButton_OnClicked(object sender, EventArgs e)
+    private async void CreateButton_OnClicked(object sender, EventArgs e)
     {
       if (string.IsNullOrWhiteSpace(_model.Name))
       {
@@ -68,15 +67,36 @@ namespace MobileDev_Projekt.Pages
 
       if (_remoteModel.IsStandard)
       {
-        _homePageModel.StandardExerciseModels.Add(_remoteModel);
+        await PopupNavigation.Instance.PushAsync(new BusyPopup("Creating exercise"));
+        try
+        {
+          if (!await App.ExerciseRepository.AddAsync(_remoteModel))
+          {
+            DependencyService.Get<IMessage>().LongAlert("Error adding exercise");
+            return;
+          }
+
+          if (IsEditMode)
+          {
+            _programPageModel.ExerciseModels.Add(_remoteModel.Adapt<ExerciseModel>());
+          }
+        }
+        catch (Exception exception)
+        {
+          DependencyService.Get<IMessage>().LongAlert("Error adding exercise");
+        }
+        finally
+        {
+          await PopupNavigation.Instance.PopAsync();
+        }
       }
 
       if (!IsEditMode)
       {
         _programPageModel.ExerciseModels.Add(_remoteModel);
       }
-      
-      Navigation.PopAsync();
+
+      await Navigation.PopAsync();
     }
 
     private void DeleteImage_OnTapped(object sender, EventArgs e)
@@ -84,7 +104,7 @@ namespace MobileDev_Projekt.Pages
       var model = (ImageModel) ((SvgCachedImage) sender).BindingContext;
       _model.ImageModels.Remove(model);
     }
-    
+
     private async void TakePhotoAction()
     {
       var photo = await MediaPicker.CapturePhotoAsync(new MediaPickerOptions {Title = "Tag et billede"});

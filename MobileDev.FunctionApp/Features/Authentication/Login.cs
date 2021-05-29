@@ -42,20 +42,20 @@ namespace MobileDev.FunctionApp.Features.Authentication
       
       return new OkObjectResult(new LoginResponse
       {
-        Jwl = token,
+        Jwt = token,
         HostKey = hostKey
       });
     }
 
     private static async Task<bool> UserExistsAsync(string username, string password)
     {
-      var sqlQueryText = $"SELECT * FROM c WHERE c.Username = '{username}'";
+      var sqlQueryText = $"SELECT * FROM c WHERE LOWER(c.Username) = '{username.ToLower()}'";
       var queryDefinition = new QueryDefinition(sqlQueryText);
-      var queryResultSetIterator = _container.GetItemQueryIterator<User>(queryDefinition);
+      var queryResultSetIterator = _container?.GetItemQueryIterator<User>(queryDefinition);
 
       var users = new List<User>();
 
-      while (queryResultSetIterator.HasMoreResults)
+      while (queryResultSetIterator is {HasMoreResults: true})
       {
         var currentResultSet = await queryResultSetIterator.ReadNextAsync();
         users.AddRange(currentResultSet);
@@ -73,7 +73,7 @@ namespace MobileDev.FunctionApp.Features.Authentication
 
     private class LoginResponse
     {
-      public string Jwl { get; set; }
+      public string Jwt { get; set; }
       public string HostKey { get; set; }
     }
   }
