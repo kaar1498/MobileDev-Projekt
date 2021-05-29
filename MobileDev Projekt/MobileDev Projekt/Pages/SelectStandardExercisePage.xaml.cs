@@ -30,10 +30,16 @@ namespace MobileDev_Projekt.Pages
       
       Task.Run(async () =>
       {
-        Busy(true);
-        _model.SearchExerciseModels = await App.ExerciseRepository.ListAsync();
-        AllExerciseModels = _model.SearchExerciseModels;
-        Busy(false);
+        IsBusy = true;
+        try
+        {
+          _model.SearchExerciseModels = await App.ExerciseRepository.ListAsync();
+          AllExerciseModels = _model.SearchExerciseModels;
+        }
+        finally
+        {
+          IsBusy = false;
+        }
       });
     }
 
@@ -84,12 +90,6 @@ namespace MobileDev_Projekt.Pages
     private void UndoButton_OnClicked(object sender, EventArgs e)
     {
       Navigation.PopAsync();
-    }
-    
-    private void Busy(bool state)
-    {
-      ActivityIndicator.IsRunning = state;
-      ActivityIndicator.IsEnabled = state;
     }
   }
 }

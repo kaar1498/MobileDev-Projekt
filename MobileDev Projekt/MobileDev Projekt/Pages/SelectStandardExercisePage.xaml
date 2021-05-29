@@ -7,7 +7,8 @@
              x:Class="MobileDev_Projekt.Pages.SelectStandardExercisePage"
              BackgroundColor="{StaticResource AccentColor}"
              NavigationPage.HasNavigationBar="false"
-             x:DataType="models:SelectStandardExercisePageModel">
+             x:DataType="models:SelectStandardExercisePageModel"
+             x:Name="MyPage">
   <ContentPage.Content>
     <StackLayout Margin="15,0,15,0">
       <!-- TitleLabel -->
@@ -23,10 +24,12 @@
              Placeholder="Search..."
              IsTextPredictionEnabled="True"
              MaxLength="50"
-             TextChanged="SearchBox_OnTextChanged"/>
-      
-      <ActivityIndicator x:Name="ActivityIndicator"/>
-      
+             TextChanged="SearchBox_OnTextChanged" />
+
+      <ActivityIndicator x:Name="ActivityIndicator"
+                         IsVisible="{Binding Source={x:Reference MyPage}, Path=IsBusy}"
+                         IsRunning="{Binding Source={x:Reference MyPage}, Path=IsBusy}" />
+
       <!-- Standard Exercises -->
       <ListView ItemsSource="{Binding SearchExerciseModels}"
                 VerticalOptions="FillAndExpand">
@@ -53,7 +56,7 @@
                            FontFamily="TextFont"
                            VerticalOptions="Center"
                            BackgroundColor="{StaticResource AccentColor}"
-                           Margin="0,10,0,10"/>
+                           Margin="0,10,0,10" />
                   </StackLayout>
                 </SwipeView>
               </ContentView>
@@ -61,7 +64,7 @@
           </DataTemplate>
         </ListView.ItemTemplate>
       </ListView>
-      
+
       <Button x:Name="UndoButton"
               Margin="0,0,0,15"
               Text="Tilbage"

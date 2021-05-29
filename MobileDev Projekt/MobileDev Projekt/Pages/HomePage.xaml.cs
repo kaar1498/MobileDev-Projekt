@@ -29,10 +29,16 @@ namespace MobileDev_Projekt.Pages
       
       Task.Run(async () =>
       {
-        Busy(true);
-        _model.StandardProgramModels = await App.ProgramRepository.ListAsync();
-        AllProgramModels = _model.StandardProgramModels;
-        Busy(false);
+        IsBusy = true;
+        try
+        {
+          _model.StandardProgramModels = await App.ProgramRepository.ListAsync();
+          AllProgramModels = _model.StandardProgramModels;
+        }
+        finally
+        {
+          IsBusy = false;
+        }
       });
     }
 
@@ -83,12 +89,6 @@ namespace MobileDev_Projekt.Pages
       }
       
       _model.StandardProgramModels = new ObservableCollection<ProgramModel>(AllProgramModels.Where(model => model.Name.ToLower().Contains(query)));
-    }
-
-    private void Busy(bool state)
-    {
-      ActivityIndicator.IsRunning = state;
-      ActivityIndicator.IsEnabled = state;
     }
   }
 }
